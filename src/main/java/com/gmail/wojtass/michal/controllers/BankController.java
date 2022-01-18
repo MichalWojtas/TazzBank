@@ -31,10 +31,7 @@ public class BankController {
 	@Transactional(readOnly = false)
 	@PostMapping("/bank")
 	public String postBank(@ModelAttribute("user") @Validated User user, BindingResult bindingResult) {
-		/*
-		if(bindingResult.hasErrors()) {
-			return "bank";
-		}*/
+		
 		Authentication auth1 = SecurityContextHolder.getContext().getAuthentication();
 		String username1 = auth1.getName();
 		User user1 = repo.findByUsername(username1);
