@@ -12,7 +12,7 @@ import com.gmail.wojtass.michal.model.User;
 
 @Controller
 public class HomeController {
-
+	//comment
 	@RequestMapping("/")
 	public String home() {
 		return "home";
