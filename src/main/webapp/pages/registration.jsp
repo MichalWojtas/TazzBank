@@ -9,9 +9,14 @@
 <!--  Bootstrap CSS -->
 <link rel ="stylesheet" href="http://stackpath.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css"
 	integrity="sha384-PDle/QlgIONtM1aqA2Qemk5gPOE7wFq8+Em+G/hmo5Iq0CCmYZLv3fVRDJ4MMwEA" crossorigin="anonymous">
-
 </head>
 <body>
+<div class = "container-fluid">
+    <div class = "row">
+    <!-- Second option for color text is same as logo text color:#891212; or first white color:#fff;-->
+        <div class="col-lg-12" style="background-color:#000;color:#fff;font-family:DejaVu Serif;font-weight:bold;font-size:36px;margin:auto;padding:1rem;"><img class="img-fluid" style="border:3px bold #fff;border-radius:20%;margin-right:3%;" src="<c:url value="/resources/img/Logo.png"/>"></>My TBank</div>
+    </div>
+</div>
 <div style="margin: auto; width: 500px; padding-top:50px">
 	<form:form method="post" modelAttribute="user">
 			<div class="form-group">
