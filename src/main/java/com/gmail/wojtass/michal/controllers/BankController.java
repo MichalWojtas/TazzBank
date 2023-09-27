@@ -3,7 +3,15 @@ package com.gmail.wojtass.michal.controllers;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.security.Principal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.gmail.wojtass.michal.otherMethods.WelcomeTextGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,6 +35,7 @@ public class BankController {
 
 	@Autowired
 	UserRepository repo;
+
 	
 	@Transactional(readOnly = false)
 	@PostMapping("/bank")
@@ -44,10 +53,13 @@ public class BankController {
 	}
 	
 	@GetMapping(value = "/bank")
-	public String getBank(Model model,@ModelAttribute("user") User user) {
+	public String getBank(Model model, @ModelAttribute("user") User user, HttpServletRequest request, HttpServletResponse response) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String username = auth.getName();
 		User loggedUser = repo.findByUsername(username);
+		HttpSession session = request.getSession();
+		WelcomeTextGenerator welcomeTextGenerator = new WelcomeTextGenerator();
+		session.setAttribute("welcomeText",welcomeTextGenerator.generate());
 		model.addAttribute("loggedUser", loggedUser);
 		model.addAttribute("user", user);
 		return "bank";

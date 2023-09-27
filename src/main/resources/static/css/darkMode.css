@@ -1,0 +1,18 @@
+body {
+    background-color: white;
+    color: black;
+}
+/* Text under Header */
+#welcomeText{
+    color:#000;
+    margin:auto;padding-left:50px;padding-top:20px;font-size:2rem;
+}
+
+#welcomeText.dark-mode {
+    color:#fff;
+}
+/* Dark mode */
+body.dark-mode {
+    background-color: #090909;
+    color: white;
+}

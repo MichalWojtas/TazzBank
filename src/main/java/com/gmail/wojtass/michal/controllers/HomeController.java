@@ -17,10 +17,12 @@ public class HomeController {
 	public String home() {
 		return "home";
 	}
+
 	@RequestMapping("/login")
 	public String loginPage() {
-		return "login";
+		return "redirect:home";
 	}
+
 	@RequestMapping("/logout-success")
 	public String logoutPage() {
 		return "logout";

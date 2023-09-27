@@ -34,7 +34,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 		.anyRequest().authenticated()
 		.and()
 		.formLogin()
-		.defaultSuccessUrl("/bank")
+		.successHandler((request, response, authentication) -> {response.sendRedirect("/bank");} ).permitAll()
 		.and()
 		.logout().invalidateHttpSession(true)
 		.clearAuthentication(true)
