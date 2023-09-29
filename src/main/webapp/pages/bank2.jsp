@@ -6,38 +6,30 @@
 <html>
 <head>
 <link rel="stylesheet" href="css/darkMode.css">
+<link rel="stylesheet" href="css/circleButtons.css">
+<link rel="stylesheet" href="css/bottomFixedDiv.css">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <!--  Bootstrap CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 <style>
-    #dd1{
-        width:48px;
-        height:48px;
-        border:2px solid #ddd;
-        background-color:#000;
-        border-radius:15px;
+    html, body {
+        height: 100%;
+        overflow: auto;
     }
-    #dd1:hover{
-        filter:drop-shadow(0px 0px 12px white);
+    .dd1{
+         width:48px;
+         height:48px;
+         border:2px solid #ddd;
+         background-color:#000;
+         border-radius:15px;
+    }
+    .dd1:hover{
+         filter:drop-shadow(0px 0px 12px white);
     }
 </style>
 </head>
 <body>
-<div class = "container-fluid border-bottom border border-secondary border border-5 border-top-0 border-start-0 border-end-0">
-    <div class = "row">
-    <!-- Second option for color text is same as logo text color:#891212; or first white color:#fff;-->
-        <div class="col-lg-8" style="background-color:#000;color:#fff;font-family:DejaVu Serif;font-weight:bold;font-size:36px;margin:auto;padding:1rem;"><img class="img-fluid" style="border:3px bold #fff;border-radius:20%;margin-right:3%;" src="<c:url value="/resources/img/Logo.png"/>"></>My TBank</div>
-        <div class="col-lg-1" style="background-color:#000;"></div><div class="col-lg-1" style="background-color:#000;"></div><div class="col-lg-1" style="background-color:#000;"></div>
-        <div class="col-lg-1 d-flex align-items-center dropdown" style="background-color:#000;"><button type="button" data-bs-toggle="dropdown" id="dd1"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="gray" class="bi bi-list" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/></svg></button>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">My Account</a></li>
-                <li><a class="dropdown-item" href="#">Settings</a></li>
-                <li><button id="toggleMode"><a class="dropdown-item" href="#">Light/Dark Mode</a></button></li>
-                <li><a class="dropdown-item" href="/logout">Logout</a></li>
-              </ul>
-        </div>
-    </div>
-</div>
+<jsp:include page="headerTemplate.jsp" />
 <div class = "container-fluid">
     <div class ="row">
         <div class = "col-lg-12" id="welcomeText">${welcomeText}, ${loggedUser.getUsername()}</div>
@@ -62,7 +54,7 @@
 <br>
 <br>
 <br>
-<div class="container-fluid">
+<div class="container-fluid" style="height: calc(100vh - 100px);">
 	<div class="row">
 		<div class="col-2"></div>
 		<div class="col-2"></div>
@@ -101,6 +93,34 @@
 		<div class="col-2"></div>
 	</div>
 </div>
+<div class="col-sm-12 text-white p-4 text-center border-top border border-secondary border border-5 border-bottom-0 border-start-0 border-end-0" style="margin-top:10px;bottom: 0;background-color:black;position:sticky;">
+    <div class="bottomFixed-button-wrapper" style="margin-bottom:0;">
+    <button class="bottomFixedDivButton" type="button"><a href="http://localhost:8080/bank" style="text-decoration:none;color:white;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" fill="red" class="bi bi-house" viewBox="0 0 16 16">
+          <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5ZM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5 5 5Z"/>
+        </svg>
+        <div style="text-align:center;font-size:12px;">Start</div></a>
+    </button>
+    </div>
+    <div class="bottomFixed-button-wrapper" style="margin-bottom:0;">
+    <button class="bottomFixedDivButton" type="button" >
+        <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" fill="red" class="bi bi-clock" viewBox="0 0 16 16">
+          <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
+          <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"/>
+        </svg>
+        <div style="text-align:center;font-size:12px;">History</div>
+    </button>
+    </div>
+    <div class="bottomFixed-button-wrapper" style="margin-bottom:0;border-right:0;">
+    <button class="bottomFixedDivButton" type="button" ><a href="http://localhost:8080/bank2" style="text-decoration:none;color:white;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" fill="red" class="bi bi-arrow-left-right" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M1 11.5a.5.5 0 0 0 .5.5h11.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 11H1.5a.5.5 0 0 0-.5.5zm14-7a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H14.5a.5.5 0 0 1 .5.5z"/>
+        </svg>
+        <div style="text-align:center;font-size:12px;">Transaction</div>
+    </button>
+    </div>
+</div>
+
 <script src="js/darkMode.js"></script>
 <script
   src="https://code.jquery.com/jquery-3.7.1.slim.min.js"
