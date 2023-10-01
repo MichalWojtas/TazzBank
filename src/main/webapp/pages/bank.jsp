@@ -7,6 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <!--  Bootstrap CSS -->
+<link rel="stylesheet" href="css/headerButtonDropdownMenu.css">
 <link rel="stylesheet" href="css/darkMode.css">
 <link rel="stylesheet" href="css/circleButtons.css">
 <link rel="stylesheet" href="css/bottomFixedDiv.css">
@@ -37,18 +38,30 @@
             <button type="button" data-bs-toggle="dropdown" data-bs-target="#dropdown-menu-2" class="dd1" style="margin-right:15px;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="gray" class="bi bi-bell" viewBox="0 0 16 16"><path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
                 </svg></button>
-            <ul id="dropdown-menu-2" class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">In Developing</a></li>
-            </ul>
+            <div id="dropdown-menu-2" class="dropdown-menu">
+                <div><a class="dropdown-item" href="#">In Developing</a></div>
+            </div>
             <button type="button" data-bs-toggle="dropdown" data-bs-target="#dropdown-menu-1" class="dd1" style="margin-right:15px;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="gray" class="bi bi-list" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
             </svg></button>
-            <ul id="dropdown-menu-1" class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">My Account</a></li>
-                <li><a class="dropdown-item" href="#">Settings</a></li>
-                <li><button id="toggleMode"><a class="dropdown-item" href="#">Light/Dark Mode</a></button></li>
-                <li><a class="dropdown-item" href="/logout">Logout</a></li>
-              </ul>
+            <div id="dropdown-menu-1" class="dropdown-menu">
+                <div class="dropdown-item" id="topOfMenu">
+                    <div style="height:100%;display: flex;flex-direction: column;justify-content: flex-end;align-items: center;padding-bottom:18px;font-weight:bold;">
+                    <div style="border: 2px solid red; border-radius:120px;height:48px;width:48px;align-content:center;justify-content:center;line-height:35px;background-color:#0f0f0f;margin-bottom:3px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="red" class="bi bi-person-fill" viewBox="0 0 16 16">
+                          <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
+                        </svg>
+                    </div>${loggedUser.getLastName()} ${loggedUser.getUsername()}</div>
+                </div>
+                <div><a class="dropdown-item" href="#">My Account</a></div>
+                <div><a class="dropdown-item" href="#">Settings</a></div>
+                <div id="toggleMode"><a class="dropdown-item" href="#">Light/Dark Mode</a></div>
+                <div class="dropdown-item" id="bottomOfMenu">
+                    <a href="/logout" style="text-decoration:none;color:red;"><div id="logoutBottomOfMenu">
+                        Logout
+                    </div></a>
+                </div>
+              </div>
         </div>
     </div>
 </div>

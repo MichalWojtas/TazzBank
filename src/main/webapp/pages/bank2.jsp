@@ -5,6 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="css/headerButtonDropdownMenu.css">
 <link rel="stylesheet" href="css/darkMode.css">
 <link rel="stylesheet" href="css/circleButtons.css">
 <link rel="stylesheet" href="css/bottomFixedDiv.css">
