@@ -27,13 +27,47 @@
                                 </svg>
                             </div>${loggedUser.getLastName()} ${loggedUser.getUsername()}</div>
                         </div>
-                        <div><a class="dropdown-item" href="#">My Account</a></div>
-                        <div><a class="dropdown-item" href="#">Settings</a></div>
-                        <div id="toggleMode"><a class="dropdown-item" href="#">Light/Dark Mode</a></div>
-                        <div class="dropdown-item" id="bottomOfMenu">
-                            <a href="/logout" style="text-decoration:none;color:red;"><div id="logoutBottomOfMenu">
-                                Logout
-                            </div></a>
+                        <div><a class="dropdown-item" href="#">
+                                            <div class="wrapperForIconInDropdown-itemForDropdownMenu1">
+                                            <div class="divIconInDropdown-itemForDropdownMenu1">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="black" class="bi bi-card-list" viewBox="0 0 16 16"><path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/><path d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-1-5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zM4 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm0 2.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z"/>
+                                                </svg>
+                                            </div></div>
+                                            <div class="wrapperForTextInDropdown-itemForDropdownMenu1">
+                                            <div class="divForTextInDropdown-itemForDropdownMenu1">
+                                            My finances</div></div>
+                                        </a></div>
+                        <div><a class="dropdown-item" href="#">
+                                            <div class="wrapperForIconInDropdown-itemForDropdownMenu1">
+                                                <div class="divIconInDropdown-itemForDropdownMenu1">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="black" class="bi bi-person-fill" viewBox="0 0 16 16"><path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
+                                                    </svg></div></div>
+                                            <div class="wrapperForTextInDropdown-itemForDropdownMenu1">
+                                                <div class="divForTextInDropdown-itemForDropdownMenu1">
+                                            My data</div></div>
+                                        </a></div>
+                        <div><a class="dropdown-item" href="#">
+                                            <div class="wrapperForIconInDropdown-itemForDropdownMenu1">
+                                                <div class="divIconInDropdown-itemForDropdownMenu1">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="black" class="bi bi-gear-fill" viewBox="0 0 16 16"><path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"/>
+                                                    </svg></div></div>
+                                            <div class="wrapperForTextInDropdown-itemForDropdownMenu1">
+                                                <div class="divForTextInDropdown-itemForDropdownMenu1">
+                                            Settings</div></div>
+                                        </a></div>
+                        <div id="toggleMode"><a class="dropdown-item" href="#">
+                                            <div class="wrapperForIconInDropdown-itemForDropdownMenu1">
+                                                <div class="divIconInDropdown-itemForDropdownMenu1">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="black" class="bi bi-moon-fill" viewBox="0 0 16 16"><path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
+                                                    </svg></div></div>
+                                            <div class="wrapperForTextInDropdown-itemForDropdownMenu1">
+                                                <div class="divForTextInDropdown-itemForDropdownMenu1">
+                                                Light/Dark Mode</div></div>
+                                        </a></div>
+                        <div class="dropdown-item" id="bottomOfMenu"><a href="/logout" style="text-decoration:none;color:red;"><div id="logoutBottomOfMenu" style="display: flex; align-items: center;justify-content:center;">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-power" viewBox="0 0 16 16"><path d="M7.5 1v7h1V1h-1z"/><path d="M3 8.812a4.999 4.999 0 0 1 2.578-4.375l-.485-.874A6 6 0 1 0 11 3.616l-.501.865A5 5 0 1 1 3 8.812z"/>
+                                            </svg>  Logout</div></a>
+                                        </div>
                         </div>
                       </div>
                 </div>
