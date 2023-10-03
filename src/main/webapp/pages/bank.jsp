@@ -121,9 +121,27 @@
 </div>
 <div class = "col-lg-12 text-center">
     <div class="button-wrapper">
-        <button class="circleButtonsLeft" type="button" >
+        <button class="circleButtonsLeft" type="button" data-bs-toggle="dropdown" data-bs-target="#addFundsDropdown" >
         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="red" class="bi bi-cash" viewBox="0 0 16 16"><path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/><path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z"/>
         </svg></button>
+        <div class="dropdown-menu" id="addFundsDropdown">
+            <div class="dropdown-item">
+                <strong>Add funds into account</strong>
+            </div>
+            <div class="dropdown-item">
+                Choose account
+            </div>
+            <div class="dropdown-item" id="dropdownItemForm">
+                <form:form method="post" modelAttribute="user">
+                    <div class="form-group">
+                	    <label>Amount:</label>
+                		<form:input path="accountValue" placeholder="0.00 PLN" type="number" step="0.01" min="0" class="form-control" style="width:30%;margin-top:4px;border:1px solid black;"/>
+                		<form:errors path="accountValue" style="color:red" class="form-number number-muted"/>
+                	</div>
+                		<form:button type="submit" class="btn btn-success" style="margin-top:8px;border:1px solid black;">Confirm</form:button>
+                	</form:form>
+            </div>
+        </div>
         <div class="text-under-circleButtons">Add funds</div>
         </div>
     <div class="button-wrapper">
@@ -138,30 +156,10 @@
 </div>
 </div>
 </div>
-<div class="container-fluid">
-	<div class="row">
-		<div class="col-sm-2"></div>
-		<div class="col-sm-2"></div>
-		<div class="col-sm-2" style="color:DarkOrange;">
-			<strong>Dodaj srodki do konta</strong><br>
-			<div style="margin: auto; width: 500px; padding-top:50px">
-				<form:form method="post" modelAttribute="user">
-				<div class="form-group">
-					<label>Kwota:</label>
-					<form:input path="accountValue" placeholder="0.00 PLN" type="number" step="0.01" min="0" class="form-control"/>
-					<form:errors path="accountValue" style="color:red" class="form-number number-muted"/>
-				</div>
-			<form:button type="submit" class="btn btn-success">Zatwierdz</form:button>
-	</form:form>
-</div>
-		</div>
-		<div class="col-sm-2"></div>
-		<div class="col-sm-2"></div>
-	</div>
-</div>
 <jsp:include page="bottomFixedDivTemplate.jsp" />
 <script src="js/darkMode.js"></script>
-<script src="js/divPreventDisappear.js"></script>
+<script src="js/menuPreventingDisappearance.js"></script>
+<script src="js/bankPreventingDisappearance.js"></script>
 <script
   src="https://code.jquery.com/jquery-3.7.1.slim.min.js"
   integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8="
