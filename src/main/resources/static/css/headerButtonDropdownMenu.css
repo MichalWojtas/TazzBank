@@ -109,3 +109,17 @@
     background-color:#fff;
     filter:drop-shadow(0px 0px 12px white);
 }
+#transactionFormBank2{
+    margin-top:50px;
+    margin-right:25%;
+    margin-left:25%;
+    margin-bottom:50px;
+    text-align:left;
+    width:50%;
+    left:40%;
+    background-color:#ccc;
+    border:var(--dropdownMenu1BorderColor);
+    border-radius:16px;
+    filter:var(--dropdownMenu1FilterShadow);
+    color:black;
+}

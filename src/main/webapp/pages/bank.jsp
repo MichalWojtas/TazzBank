@@ -1,11 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+
 <!--  Bootstrap CSS -->
 <link rel="stylesheet" href="css/headerButtonDropdownMenu.css">
 <link rel="stylesheet" href="css/darkMode.css">
@@ -156,6 +157,7 @@
 </div>
 </div>
 </div>
+<jsp:include page="footerTemplate.jsp" />
 <jsp:include page="bottomFixedDivTemplate.jsp" />
 <script src="js/darkMode.js"></script>
 <script src="js/menuPreventingDisappearance.js"></script>

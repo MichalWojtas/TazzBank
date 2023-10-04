@@ -1,4 +1,4 @@
-<div class="col-sm-12 text-white p-4 text-center border-top border border-secondary border border-5 border-bottom-0 border-start-0 border-end-0" style="margin-top:10px;bottom: 0;background-color:black;position:sticky;">
+<div class="col-sm-12 text-white p-4 text-center border-top border border-secondary border border-5 border-bottom-0 border-start-0 border-end-0" style="bottom: 0;background-color:black;position:sticky;">
     <div class="bottomFixed-button-wrapper" style="margin-bottom:0;">
     <a href="http://localhost:8080/bank" style="text-decoration:none;color:white;"><button class="bottomFixedDivButton" type="button">
         <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" fill="red" class="bi bi-house" viewBox="0 0 16 16">
