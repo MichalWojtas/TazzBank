@@ -13,7 +13,7 @@ import org.springframework.validation.Validator;
 import com.gmail.wojtass.michal.model.User;
 import com.gmail.wojtass.michal.services.TransactionRepository;
 import com.gmail.wojtass.michal.services.UserRepository;
-
+/*
 @Component
 @Controller
 public class UserValidator implements Validator{
@@ -61,6 +61,10 @@ public class UserValidator implements Validator{
 			errors.rejectValue(fieldName, validator.getErrCode(), validator.getErrMessage());
 		}
 	}
-	
+
+
+
 
 }
+*/
+

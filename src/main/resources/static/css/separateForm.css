@@ -1,0 +1,19 @@
+:root{
+    --mainSeparateFormBorderColor:4px solid #111;
+    --mainSeparateFormFilterShadow:drop-shadow(12px 12px 12px black);
+}
+
+.mainSeparateForm{
+    margin-top:50px;
+    margin-right:25%;
+    margin-left:25%;
+    margin-bottom:50px;
+    text-align:left;
+    width:50%;
+    left:40%;
+    background-color:#ccc;
+    border:var(--mainSeparateFormBorderColor);
+    border-radius:16px;
+    filter:var(--mainSeparateFormFilterShadow);
+    color:black;
+}

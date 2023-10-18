@@ -6,26 +6,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <link rel="stylesheet" href="css/headerButtonDropdownMenu.css">
 <link rel="stylesheet" href="css/darkMode.css">
-<link rel="stylesheet" href="css/circleButtons.css">
 <link rel="stylesheet" href="css/bottomFixedDiv.css">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <!--  Bootstrap CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 <style>
-    html, body {
-        height: 100%;
-        overflow: auto;
-    }
-    .dd1{
-         width:48px;
-         height:48px;
-         border:2px solid #ddd;
-         background-color:#000;
-         border-radius:15px;
-    }
-    .dd1:hover{
-         filter:drop-shadow(0px 0px 12px white);
-    }
     .form-group{
         color:black;
     }
@@ -77,7 +62,6 @@
 <jsp:include page="footerTemplate.jsp" />
 <jsp:include page="bottomFixedDivTemplate.jsp" />
 <script src="js/darkMode.js"></script>
-<script src="js/divPreventDisappear.js"></script>
 <script
   src="https://code.jquery.com/jquery-3.7.1.slim.min.js"
   integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8="

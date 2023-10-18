@@ -28,7 +28,6 @@ import com.gmail.wojtass.michal.model.Transaction;
 import com.gmail.wojtass.michal.model.User;
 import com.gmail.wojtass.michal.services.TransactionRepository;
 import com.gmail.wojtass.michal.services.UserRepository;
-import com.gmail.wojtass.michal.validator.UserValidator;
 
 @Controller
 public class TransferController {

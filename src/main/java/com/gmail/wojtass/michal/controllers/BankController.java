@@ -15,6 +15,9 @@ import com.gmail.wojtass.michal.otherMethods.WelcomeTextGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.web.csrf.CsrfToken;
+import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -36,9 +39,17 @@ public class BankController {
 	@Autowired
 	UserRepository repo;
 
+	/* //If token will be required, made when problems with AJAX
+	@Autowired
+	private CsrfTokenRepository csrfTokenRepository;
+
+	public CsrfToken getCsrfToken(HttpServletRequest request) {
+		return csrfTokenRepository.loadToken(request);
+	}
+	 */
 	
 	@Transactional(readOnly = false)
-	@PostMapping("/bank")
+	@PostMapping(value = "/bank",params = "addValue")
 	public String postBank(@ModelAttribute("user") @Validated User user, BindingResult bindingResult) {
 		
 		Authentication auth1 = SecurityContextHolder.getContext().getAuthentication();

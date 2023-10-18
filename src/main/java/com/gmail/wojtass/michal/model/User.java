@@ -12,12 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.annotation.Transient;
@@ -32,10 +27,15 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
 	private long id;
-	
+
+	@Email(message ="Email format required")
+	@NotEmpty(message= "Can't be empty")
+	@NotNull
+	@NotBlank(message= "Can't be blank")
 	@Column(name = "email", unique = true)
 	private String email;
-	
+
+	@Pattern(regexp = "[a-zA-Z0-9]{6,254}", message="Username should contain a minimum of 6 characters.")
 	@Column(name = "username", unique = true)
 	private String username;
 	
@@ -81,11 +81,15 @@ public class User {
 	@Column(name = "correspondenceaddress")
 	@Size(max = 254, message="You reach limit of characters")
 	private String addressForCorrespondence;
-	
+
+
 	@Transient
+	@Column(name = "b4encryptPassword")
+	@Pattern(regexp = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d).{6,}$", message = "Password must contain at least 1 uppercase letter, 1 lowercase letter, 1 digit and have 6 characters.")
 	private transient String b4encryptPassword;
 	
 	@Transient
+	@Column(name = "confirmPassword")
 	private transient String confirmPassword;
 	
 	@Column(name = "account_value")
@@ -105,6 +109,9 @@ public class User {
 	
 	public void bcryptPassword() {
 		this.password = BCrypt.hashpw(b4encryptPassword, BCrypt.gensalt(10));
+	}
+	public String bcryptPassword(String password){
+		return BCrypt.hashpw(password,BCrypt.gensalt(10));
 	}
 	
 	public String getB4encryptPassword() {

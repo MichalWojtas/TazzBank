@@ -73,7 +73,7 @@
                         <div class="divForTextInDropdown-itemForDropdownMenu1">
                     My data</div></div>
                 </a></div>
-                <div><a class="dropdown-item" href="#">
+                <div><a class="dropdown-item" href="#" id="settingsDropdown" data-bs-toggle="dropdown" data-bs-target="#settingsDropdownMenu">
                     <div class="wrapperForIconInDropdown-itemForDropdownMenu1">
                         <div class="divIconInDropdown-itemForDropdownMenu1">
                             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="black" class="bi bi-gear-fill" viewBox="0 0 16 16"><path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"/>
@@ -81,7 +81,34 @@
                     <div class="wrapperForTextInDropdown-itemForDropdownMenu1">
                         <div class="divForTextInDropdown-itemForDropdownMenu1">
                     Settings</div></div>
-                </a></div>
+                    </a>
+                    <div class="dropdown-menu" id="settingsDropdownMenu">
+                        <div><a class ="dropdown-item" style="color:black;font-weight:bold;font-size:18px;background-color:#ccc;padding-left:50px;border-bottom:2px solid black;text-align:left;line-height:3;">
+                            Settings
+                        </a></div>
+                        <div class ="dropdown-item" style="display:block;padding-top:10px;border-bottom:2px solid black;" id="passwordDropdownItemElement">
+                            <div class="settingsLeftDivText">Password</div>
+                            <div class="settingsRightDivChange">
+                                <div class="settingsButtonForChange"><a href="http://localhost:8080/bank/passwordChangeForm" style="text-decoration:none;color:inherit;display:block;">Change</a></div>
+                                </div>
+                        </div>
+
+                        <div><a class ="dropdown-item" style="padding-top:10px;border-bottom:2px solid black;" id="passwordDropdownItemElement">
+                            <div class="settingsLeftDivText">Limits for transfers</div>
+                            <div class="settingsRightDivChange">
+                                <div class="settingsButtonForChange" id="toggleLimitsChangeDropdown" aria-haspopup="true" aria-expanded="false" data-bs-toggle="dropdown" data-bs-target="#passwordChangeDropdownMenu" >Change</div>
+                                </div>
+                            </a>
+                            <div id="limitsChangeDropdownMenu" style="display:none;">
+                                <div><a class="dropdown-item">aaaaaaaaaaaa</a></div>
+                                <div><a class="dropdown-item">bbbbbbbb</a></div>
+                                <div><a class="dropdown-item">aa</a></div>
+                                <div><a class="dropdown-item">ccccccc</a></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
                 <div id="toggleMode"><a class="dropdown-item" href="#">
                     <div class="wrapperForIconInDropdown-itemForDropdownMenu1">
                         <div class="divIconInDropdown-itemForDropdownMenu1">
@@ -139,7 +166,7 @@
                 		<form:input path="accountValue" placeholder="0.00 PLN" type="number" step="0.01" min="0" class="form-control" style="width:30%;margin-top:4px;border:1px solid black;"/>
                 		<form:errors path="accountValue" style="color:red" class="form-number number-muted"/>
                 	</div>
-                		<form:button type="submit" class="btn btn-success" style="margin-top:8px;border:1px solid black;">Confirm</form:button>
+                		<form:button name="addValue" type="submit" class="btn btn-success" style="margin-top:8px;border:1px solid black;">Confirm</form:button>
                 	</form:form>
             </div>
         </div>
@@ -159,6 +186,7 @@
 </div>
 <jsp:include page="footerTemplate.jsp" />
 <jsp:include page="bottomFixedDivTemplate.jsp" />
+<script src="js/openInnerDropdownList.js"></script>
 <script src="js/darkMode.js"></script>
 <script src="js/menuPreventingDisappearance.js"></script>
 <script src="js/bankPreventingDisappearance.js"></script>

@@ -19,14 +19,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.gmail.wojtass.michal.model.User;
 import com.gmail.wojtass.michal.services.UserRepository;
-import com.gmail.wojtass.michal.validator.UserValidator;
+//import com.gmail.wojtass.michal.validator.UserValidator;
 
 @Controller
 public class RegistrationController {
 	
 	@Autowired
 	UserRepository repo;
-	
+	/*
 	@Autowired
 	UserValidator userValidator;
 	
@@ -34,6 +34,8 @@ public class RegistrationController {
 	protected void initBinder(WebDataBinder binder) {
 		binder.addValidators(userValidator);
 	}
+
+	 */
 	
 	@RequestMapping("/registration")
 	public String registrationPage() {
@@ -42,6 +44,17 @@ public class RegistrationController {
 	
 	@PostMapping(value="/registration")
 	public String postRegister(@ModelAttribute("user") @Validated User user, BindingResult bindingResult) {
+		if(repo.existsByUsername(user.getUsername())) {
+			bindingResult.rejectValue("username", "err_code", "That username already exists.");
+		}
+		if(repo.existsByEmail(user.getEmail())) {
+			bindingResult.rejectValue("email", "err_code", "That email already exists.");
+		}
+		String password = user.getB4encryptPassword();
+		String confirmPassword = user.getConfirmPassword();
+		if(!password.equals(confirmPassword)) {
+			bindingResult.rejectValue("b4encryptPassword", "err_code", "Passwords must be the same");
+		}
 		if(bindingResult.hasErrors()) {
 			return "registration";
 		}

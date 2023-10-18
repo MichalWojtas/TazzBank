@@ -14,6 +14,8 @@ function toggleDarkMode() {
         document.documentElement.style.setProperty('--dropdownMenu1FilterShadow', 'drop-shadow(12px 12px 12px black)');
         document.documentElement.style.setProperty('--dropdownMenuBorderColor', '4px solid #111');
         document.documentElement.style.setProperty('--dropdownMenuFilterShadow', 'drop-shadow(12px 12px 12px black)');
+        document.documentElement.style.setProperty('--mainSeparateFormBorderColor', '4px solid #111');
+        document.documentElement.style.setProperty('--mainSeparateFormFilterShadow', 'drop-shadow(12px 12px 12px black)');
 
         localStorage.setItem('darkMode', 'false'); // Save in localStorage
     } else {
@@ -24,6 +26,8 @@ function toggleDarkMode() {
         document.documentElement.style.setProperty('--dropdownMenu1FilterShadow', 'drop-shadow(12px 12px 12px white)');
         document.documentElement.style.setProperty('--dropdownMenuBorderColor', '4px solid white');
         document.documentElement.style.setProperty('--dropdownMenuFilterShadow', 'drop-shadow(12px 12px 12px white)');
+        document.documentElement.style.setProperty('--mainSeparateFormBorderColor', '4px solid white');
+        document.documentElement.style.setProperty('--mainSeparateFormFilterShadow', 'drop-shadow(12px 12px 12px white)');
         localStorage.setItem('darkMode', 'true');
 
     }
