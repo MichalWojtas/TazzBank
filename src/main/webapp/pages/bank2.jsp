@@ -25,8 +25,8 @@
 </div>
 <div class="container-fluid" style="margin-bottom:70px;padding-left:53px;">
 	<div class="row">
-		<div class="col-lg-12" style="font-size:36px;font-weight:bold;color:black;">Transaction</div>
-		<div class="col-lg-12" style="font-size:28px;color:black;">Amount on your accounts: ${loggedUser.getAccountValue()}PLN</div>
+		<div class="col-lg-12"><div class="transactionAndAmountOnAccounts" style="font-size:36px;font-weight:bold;">Transaction</div></div>
+		<div class="col-lg-12"><div class="transactionAndAmountOnAccounts" style="font-size:28px;">Amount on your accounts: ${loggedUser.getAccountValue()}PLN</div></div>
 	</div>
 </div>
 <div class="container-fluid" id="transactionFormBank2" style="margin-bottom:50px;padding-left:80px;padding-right:80px;">

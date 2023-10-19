@@ -39,6 +39,21 @@ function toggleDarkMode() {
         welcomeText.classList.add('dark-mode');
         localStorage.setItem('darkMode','true');
     }
+
+    var elementsTransactionAndAmountOnAccounts = document.getElementsByClassName("transactionAndAmountOnAccounts");
+    for (var i = 0; i < elementsTransactionAndAmountOnAccounts.length; i++) {
+        var element = elementsTransactionAndAmountOnAccounts[i];
+        if (element.classList.contains('dark-mode')) {
+            element.classList.remove('dark-mode');
+            element.style.color = "black";
+        } else {
+            element.classList.add('dark-mode');
+            element.style.color = "white";
+        }
+    }
+
+    var isDarkModeTransactionAndAmountOnAccounts = elementsTransactionAndAmountOnAccounts[0].classList.contains('dark-mode');
+    localStorage.setItem('darkMode', isDarkModeTransactionAndAmountOnAccounts.toString());
 }
 
 const toggleModeButton = document.getElementById('toggleMode');
