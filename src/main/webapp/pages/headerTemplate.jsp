@@ -51,15 +51,42 @@
                         <div class="divForTextInDropdown-itemForDropdownMenu1">
                      My data</div></div>
                 </a></div>
-                <div><a class="dropdown-item" href="#">
-                    <div class="wrapperForIconInDropdown-itemForDropdownMenu1">
-                        <div class="divIconInDropdown-itemForDropdownMenu1">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="black" class="bi bi-gear-fill" viewBox="0 0 16 16"><path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"/>
-                    </svg></div></div>
-                    <div class="wrapperForTextInDropdown-itemForDropdownMenu1">
-                        <div class="divForTextInDropdown-itemForDropdownMenu1">
-                    Settings</div></div>
-                </a></div>
+                <div><a class="dropdown-item" href="#" id="settingsDropdown" data-bs-toggle="dropdown" data-bs-target="#settingsDropdownMenu">
+                                    <div class="wrapperForIconInDropdown-itemForDropdownMenu1">
+                                        <div class="divIconInDropdown-itemForDropdownMenu1">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="black" class="bi bi-gear-fill" viewBox="0 0 16 16"><path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"/>
+                                            </svg></div></div>
+                                    <div class="wrapperForTextInDropdown-itemForDropdownMenu1">
+                                        <div class="divForTextInDropdown-itemForDropdownMenu1">
+                                    Settings</div></div>
+                                    </a>
+                                    <div class="dropdown-menu" id="settingsDropdownMenu">
+                                        <div><a class ="dropdown-item" style="color:black;font-weight:bold;font-size:18px;background-color:#ccc;padding-left:50px;border-bottom:2px solid black;text-align:left;line-height:3;">
+                                            Settings
+                                        </a></div>
+                                        <div class ="dropdown-item" style="display:block;padding-top:10px;border-bottom:2px solid black;" id="passwordDropdownItemElement">
+                                            <div class="settingsLeftDivText">Password</div>
+                                            <div class="settingsRightDivChange">
+                                                <div class="settingsButtonForChange"><a href="http://localhost:8080/bank/passwordChangeForm" style="text-decoration:none;color:inherit;display:block;">Change</a></div>
+                                                </div>
+                                        </div>
+
+                                        <div><a class ="dropdown-item" style="padding-top:10px;border-bottom:2px solid black;" id="passwordDropdownItemElement">
+                                            <div class="settingsLeftDivText">Limits for transfers</div>
+                                            <div class="settingsRightDivChange">
+                                                <div class="settingsButtonForChange" id="toggleLimitsChangeDropdown" aria-haspopup="true" aria-expanded="false" data-bs-toggle="dropdown" data-bs-target="#passwordChangeDropdownMenu" >Change</div>
+                                                </div>
+                                            </a>
+                                            <div id="limitsChangeDropdownMenu" style="display:none;">
+                                                <div><a class="dropdown-item">aaaaaaaaaaaa</a></div>
+                                                <div><a class="dropdown-item">bbbbbbbb</a></div>
+                                                <div><a class="dropdown-item">aa</a></div>
+                                                <div><a class="dropdown-item">ccccccc</a></div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
                 <div id="toggleMode"><a class="dropdown-item" href="#">
                     <div class="wrapperForIconInDropdown-itemForDropdownMenu1">
                         <div class="divIconInDropdown-itemForDropdownMenu1">
@@ -78,3 +105,11 @@
         </div>
     </div>
 </div>
+<script src="../js/openInnerDropdownList.js"></script>
+<script src="../js/menuPreventingDisappearance.js"></script>
+<script
+  src="https://code.jquery.com/jquery-3.7.1.slim.min.js"
+  integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8="
+  crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
