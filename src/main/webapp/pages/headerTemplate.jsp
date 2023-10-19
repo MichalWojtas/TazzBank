@@ -64,24 +64,30 @@
                                         <div><a class ="dropdown-item" style="color:black;font-weight:bold;font-size:18px;background-color:#ccc;padding-left:50px;border-bottom:2px solid black;text-align:left;line-height:3;">
                                             Settings
                                         </a></div>
-                                        <div class ="dropdown-item" style="display:block;padding-top:10px;border-bottom:2px solid black;" id="passwordDropdownItemElement">
+                                        <div class ="dropdown-item" style="display:block;padding-top:10px;border-bottom:2px solid black;">
                                             <div class="settingsLeftDivText">Password</div>
                                             <div class="settingsRightDivChange">
                                                 <div class="settingsButtonForChange"><a href="http://localhost:8080/bank/passwordChangeForm" style="text-decoration:none;color:inherit;display:block;">Change</a></div>
                                                 </div>
                                         </div>
 
-                                        <div><a class ="dropdown-item" style="padding-top:10px;border-bottom:2px solid black;" id="passwordDropdownItemElement">
+                                        <div><a class ="dropdown-item" style="padding-top:10px;border-bottom:2px solid black;">
                                             <div class="settingsLeftDivText">Limits for transfers</div>
                                             <div class="settingsRightDivChange">
-                                                <div class="settingsButtonForChange" id="toggleLimitsChangeDropdown" aria-haspopup="true" aria-expanded="false" data-bs-toggle="dropdown" data-bs-target="#passwordChangeDropdownMenu" >Change</div>
-                                                </div>
+                                                <div class="settingsButtonForChange" id="toggleLimitsChangeDropdown" aria-haspopup="true" aria-expanded="false" data-bs-toggle="dropdown" data-bs-target="#limitsChangeDropdownMenu" >Open</div>
+                                            </div>
                                             </a>
                                             <div id="limitsChangeDropdownMenu" style="display:none;">
-                                                <div><a class="dropdown-item">aaaaaaaaaaaa</a></div>
-                                                <div><a class="dropdown-item">bbbbbbbb</a></div>
-                                                <div><a class="dropdown-item">aa</a></div>
-                                                <div><a class="dropdown-item">ccccccc</a></div>
+                                                <div><a class="dropdown-item">Actual limit transaction for day: </a></div>
+                                                <div><a class="dropdown-item">Actual limit transaction for month:</a></div>
+                                                <div><a class="dropdown-item">Transaction limit for day</a></div>
+                                                <div><a class="dropdown-item">Transaction limit for month</a></div>
+                                            </div>
+                                        </div>
+                                        <div class ="dropdown-item" style="display:block;padding-top:10px;border-bottom:2px solid black;">
+                                            <div class="settingsLeftDivText">Authorization phone</div>
+                                            <div class="settingsRightDivChange">
+                                                <div class="settingsButtonForChange"><a href="#" style="text-decoration:none;color:inherit;display:block;">Change</a></div>
                                             </div>
                                         </div>
 
@@ -105,6 +111,21 @@
         </div>
     </div>
 </div>
+<script>
+<!-- This script doesnt work when is in external file with import here, i dont know why -->
+    const triggerDiv2 = document.getElementById("toggleLimitsChangeDropdown");
+    const item2 = document.getElementById("limitsChangeDropdownMenu");
+    var innerLimitsIsOpen = false;
+    triggerDiv2.addEventListener("click",function (){
+        if(!innerLimitsIsOpen){
+            item2.style.display = "block";
+            innerLimitsIsOpen = true;
+        }else{
+            item2.style.display = "none";
+            innerLimitsIsOpen = false;
+        }
+    });
+</script>
 <script src="../js/openInnerDropdownList.js"></script>
 <script src="../js/menuPreventingDisappearance.js"></script>
 <script
