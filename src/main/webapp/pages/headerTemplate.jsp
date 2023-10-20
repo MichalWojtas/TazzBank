@@ -9,7 +9,6 @@
 </head>
 <div class = "container-fluid border-bottom border border-secondary border border-5 border-top-0 border-start-0 border-end-0">
     <div class = "row">
-        <!-- Second option for color text is same as logo text color:#891212; or first white color:#fff;-->
         <div class="col-lg-8" style="background-color:#000;color:#fff;font-family:DejaVu Serif;font-weight:bold;font-size:36px;margin:auto;padding:1rem;"><img class="img-fluid" style="border:3px bold #fff;border-radius:20%;margin-right:3%;" src="<c:url value="/resources/img/Logo.png"/>"></>My TBank</div>
         <div class="col-lg-4 text-center d-flex align-items-center justify-content-end" style="background-color:#000;">
             <button type="button" class="dd1" onclick="goBack()" style="margin-right:15px;">
@@ -77,12 +76,44 @@
                                                 <div class="settingsButtonForChange" id="toggleLimitsChangeDropdown" aria-haspopup="true" aria-expanded="false" data-bs-toggle="dropdown" data-bs-target="#limitsChangeDropdownMenu" >Open</div>
                                             </div>
                                             </a>
-                                            <div id="limitsChangeDropdownMenu" style="display:none;">
-                                                <div><a class="dropdown-item">Actual limit transaction for day: </a></div>
-                                                <div><a class="dropdown-item">Actual limit transaction for month:</a></div>
-                                                <div><a class="dropdown-item">Transaction limit for day</a></div>
-                                                <div><a class="dropdown-item">Transaction limit for month</a></div>
-                                            </div>
+                                            <div id="limitsChangeDropdownMenu" style="display:none;background-color:#b0b0b0;">
+                                                <div><a class="dropdown-item" style="display:block;padding-top:10px;">
+                                                    <div class="settingsLeftDivText">Set limit transaction for day: </div>
+                                                    <div class="settingsRightDivChange">
+                                                        <div class="settingsButtonForChange" style="text-decoration:none;">${loggedUser.getLimitTransactionForDay()} PLN</div>
+                                                    </div>
+                                                </a></div>
+                                                <div><a class="dropdown-item" style="display:block;padding-top:10px;">
+                                                    <div class="settingsLeftDivText">Your actual reached transaction for day:</div>
+                                                    <div class="settingsRightDivChange">
+                                                        <div class="settingsButtonForChange" style="text-decoration:none;">${loggedUser.getTempLimitTransactionForDay()} PLN</div>
+                                                    </div>
+                                                </a></div>
+                                                <div><a class="dropdown-item" style="display:block;padding-top:10px;">
+                                                    <div class="settingsLeftDivText">Set limit transaction for month:</div>
+                                                    <div class="settingsRightDivChange">
+                                                        <div class="settingsButtonForChange" style="text-decoration:none;">${loggedUser.getLimitTransactionForMonth()} PLN</div>
+                                                    </div>
+                                                </a></div>
+                                                <div><a class="dropdown-item" style="display:block;padding-top:10px;">
+                                                    <div class="settingsLeftDivText">Your actual reached transaction for month:</div>
+                                                    <div class="settingsRightDivChange">
+                                                        <div class="settingsButtonForChange" style="text-decoration:none;">${loggedUser.getTempLimitTransactionForMonth()} PLN</div>
+                                                    </div>
+                                                </a></div>
+                                                <!-- I deleted <a> below, it worked with it, if will work to delete this comment, same for month -->
+                                                <div class="dropdown-item" style="display:block;padding-top:10px;">
+                                                    <div class="settingsLeftDivText">Transaction limit for day</div>
+                                                    <div class="settingsRightDivChange">
+                                                        <div class="settingsButtonForChange"><a href="http://localhost:8080/bank/transactionLimitForDayChangeForm" style="text-decoration:none;color:inherit;display:block;">Change</a></div>
+                                                    </div>
+                                                </div>
+                                                <div class="dropdown-item" style="display:block;padding-top:10px;">
+                                                    <div class="settingsLeftDivText">Transaction limit for month</div>
+                                                    <div class="settingsRightDivChange">
+                                                        <div class="settingsButtonForChange"><a href="http://localhost:8080/bank/transactionLimitForMonthChangeForm" style="text-decoration:none;color:inherit;display:block;">Change</a></div>
+                                                    </div>
+                                                </div>
                                         </div>
                                         <div class ="dropdown-item" style="display:block;padding-top:10px;border-bottom:2px solid black;">
                                             <div class="settingsLeftDivText">Authorization phone</div>

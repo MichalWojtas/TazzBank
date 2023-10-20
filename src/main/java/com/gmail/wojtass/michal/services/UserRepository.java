@@ -22,6 +22,14 @@ public interface UserRepository extends JpaRepository<User,Long> {
 	@Modifying
 	@Query("update User s set s.accountValue=?1 where s.id=?2")
 	void updateAccountValue(double accountValue,long id);
+
+	@Modifying
+	@Query("update User s set s.tempLimitTransactionForDay=?1 where s.id=?2")
+	void updateTempLimitTransactionForDay(double tempLimitTransactionForDay,long id);
+
+	@Modifying
+	@Query("update User s set s.tempLimitTransactionForMonth=?1 where s.id=?2")
+	void updateTempLimitTransactionForMonth(double tempLimitTransactionForMonth,long id);
 	
 	
 	User findById(long id);

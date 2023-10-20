@@ -24,6 +24,13 @@ public class SettingsController {
     @Autowired
     UserRepository repo;
 
+    private User getUser2(){
+        Authentication auth2 = SecurityContextHolder.getContext().getAuthentication();
+        String username2 = auth2.getName();
+        User user2 = repo.findByUsername(username2);
+        return user2;
+    }
+
     @RequestMapping("/bank/passwordChangeForm")
     public String passwordChangeForm(Model model, @SessionAttribute("loggedUser") User user){
         model.addAttribute("loggedUser",user);
@@ -32,9 +39,7 @@ public class SettingsController {
 
     @PostMapping("/bank/passwordChangeForm")
     public String passwordChange(@ModelAttribute("user") @Validated User user, BindingResult bindingResult){
-        Authentication auth2 = SecurityContextHolder.getContext().getAuthentication();
-        String username2 = auth2.getName();
-        User user2 = repo.findByUsername(username2);
+        User user2 = getUser2();
         boolean checkPassword = BCrypt.checkpw(user.getConfirmPassword(),user2.getPassword());
         if(!checkPassword){
             bindingResult.rejectValue("confirmPassword", "error_code", "It's not your actual password");
@@ -56,4 +61,65 @@ public class SettingsController {
         model.addAttribute("user", user);
         return "passwordChangeForm";
     }
+
+    @RequestMapping("/bank/transactionLimitForDayChangeForm")
+    public String transactionLimitForDayChangeForm(Model model, @SessionAttribute("loggedUser") User user){
+        model.addAttribute("loggedUser",user);
+        return "transactionLimitForDayChangeForm";
+    }
+
+    @GetMapping("/bank/transactionLimitForDayChangeForm")
+    public String getTransactionLimitForDayChangeForm(Model model, @ModelAttribute("user") User user){
+        model.addAttribute("user", user);
+        return "transactionLimitForDayChangeForm";
+    }
+
+    @PostMapping("/bank/transactionLimitForDayChangeForm")
+    public String postTransactionLimitForDayChangeForm(@ModelAttribute("user") @Validated User user, BindingResult bindingResult){
+        User user2 = getUser2();
+        boolean checkPassword = BCrypt.checkpw(user.getConfirmPassword(),user2.getPassword());
+        if(!checkPassword){
+            bindingResult.rejectValue("confirmPassword", "error_code", "It's not your actual password");
+        }
+        if(bindingResult.hasFieldErrors("confirmPassword")) {
+            return "transactionLimitForDayChangeForm";
+        }else {
+            user2.setLimitTransactionForDay(user.getLimitTransactionForDay());
+            repo.save(user2);
+            return "redirect:/bank";
+        }
+    }
+
+    @RequestMapping("/bank/transactionLimitForMonthChangeForm")
+    public String transactionLimitForMonthChangeForm(Model model, @SessionAttribute("loggedUser") User user){
+        model.addAttribute("loggedUser",user);
+        return "transactionLimitForMonthChangeForm";
+    }
+
+    @GetMapping("/bank/transactionLimitForMonthChangeForm")
+    public String getTransactionLimitForMonthChangeForm(Model model, @ModelAttribute("user") User user){
+        model.addAttribute("user", user);
+        return "transactionLimitForMonthChangeForm";
+    }
+
+    @PostMapping("/bank/transactionLimitForMonthChangeForm")
+    public String postTransactionLimitForMonthChangeForm(@ModelAttribute("user") @Validated User user, BindingResult bindingResult){
+        User user2 = getUser2();
+        boolean checkPassword = BCrypt.checkpw(user.getConfirmPassword(),user2.getPassword());
+        boolean isMonthGreaterThanDay = user.getLimitTransactionForMonth() >= user2.getLimitTransactionForDay();
+        if(!checkPassword){
+            bindingResult.rejectValue("confirmPassword", "error_code", "It's not your actual password");
+        }
+        if(!isMonthGreaterThanDay){
+            bindingResult.rejectValue("limitTransactionForMonth","error_code","Month limit can't be lower than day limit");
+        }
+        if(bindingResult.hasFieldErrors("confirmPassword") || bindingResult.hasFieldErrors("limitTransactionForMonth")) {
+            return "transactionLimitForMonthChangeForm";
+        }else {
+            user2.setLimitTransactionForMonth(user.getLimitTransactionForMonth());
+            repo.save(user2);
+            return "redirect:/bank";
+        }
+    }
+
 }

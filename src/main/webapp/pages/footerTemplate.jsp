@@ -71,7 +71,7 @@
       <a
         class="btn text-white btn-floating m-1"
         style="background-color: #0082ca;border:2px solid white;"
-        href="#!"
+        href="https://www.linkedin.com/in/micha%C5%82-wojtas-6b12b2288/"
         role="button"
         ><i class="fab fa-linkedin-in"></i
       ></a>
@@ -79,7 +79,7 @@
       <a
         class="btn text-white btn-floating m-1"
         style="background-color: #333333;border:2px solid white;"
-        href="#!"
+        href="https://github.com/MichalWojtas/"
         role="button"
         ><i class="fab fa-github"></i
       ></a>

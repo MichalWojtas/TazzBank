@@ -42,13 +42,13 @@ function toggleDarkMode() {
 
     var elementsTransactionAndAmountOnAccounts = document.getElementsByClassName("transactionAndAmountOnAccounts");
     for (var i = 0; i < elementsTransactionAndAmountOnAccounts.length; i++) {
-        var element = elementsTransactionAndAmountOnAccounts[i];
-        if (element.classList.contains('dark-mode')) {
-            element.classList.remove('dark-mode');
-            element.style.color = "black";
+        var elementTransactionAndAmountOnAccounts = elementsTransactionAndAmountOnAccounts[i];
+        if (elementTransactionAndAmountOnAccounts.classList.contains('dark-mode')) {
+            elementTransactionAndAmountOnAccounts.classList.remove('dark-mode');
+            elementTransactionAndAmountOnAccounts.style.color = "black";
         } else {
-            element.classList.add('dark-mode');
-            element.style.color = "white";
+            elementTransactionAndAmountOnAccounts.classList.add('dark-mode');
+            elementTransactionAndAmountOnAccounts.style.color = "white";
         }
     }
 

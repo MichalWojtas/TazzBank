@@ -98,14 +98,31 @@ public class User {
 	
 	@Column(name = "account_number", unique = true)
 	private String accountNumber;
-	
+
+	@Max(value = 10000000,message = "Max value for limit transaction is set as 10.000.000")
+	@Min(value = 0,message = "Limit transaction can't be negative")
+	@Column(name = "limit_transaction_for_day", columnDefinition = "double default 0")
+	private double limitTransactionForDay = 0;
+
+	@Max(value = 10000000,message = "Max value for limit transaction is set as 10.000.000")
+	@Min(value = 0,message = "Limit transaction can't be negative")
+	@Column(name = "limit_transaction_for_month", columnDefinition = "double default 0")
+	private double limitTransactionForMonth = 0;
+
+	@Column(name = "temp_limit_transaction_for_day", columnDefinition = "double default 0")
+	private double tempLimitTransactionForDay = 0;
+
+	@Column(name = "temp_limit_transaction_for_month", columnDefinition = "double default 0")
+	private double tempLimitTransactionForMonth = 0;
+
 	@ManyToMany(fetch=FetchType.EAGER)
 	private List<Transaction> transactions = new ArrayList<Transaction>();
 	
 	public User() {
 		super();
 	}
-	
+
+
 	
 	public void bcryptPassword() {
 		this.password = BCrypt.hashpw(b4encryptPassword, BCrypt.gensalt(10));
@@ -244,5 +261,37 @@ public class User {
 	public void setTransactions(List<Transaction> transactions) {
 		this.transactions = transactions;
 	}
-	
+
+	public double getLimitTransactionForDay() {
+		return limitTransactionForDay;
+	}
+
+	public void setLimitTransactionForDay(double limitTransactionForDay) {
+		this.limitTransactionForDay = limitTransactionForDay;
+	}
+
+	public double getLimitTransactionForMonth() {
+		return limitTransactionForMonth;
+	}
+
+	public void setLimitTransactionForMonth(double limitTransactionForMonth) {
+		this.limitTransactionForMonth = limitTransactionForMonth;
+	}
+
+	public double getTempLimitTransactionForDay() {
+		return tempLimitTransactionForDay;
+	}
+
+	public void setTempLimitTransactionForDay(double tempLimitTransactionForDay) {
+		this.tempLimitTransactionForDay = tempLimitTransactionForDay;
+	}
+
+	public double getTempLimitTransactionForMonth() {
+		return tempLimitTransactionForMonth;
+	}
+
+	public void setTempLimitTransactionForMonth(double tempLimitTransactionForMonth) {
+		this.tempLimitTransactionForMonth = tempLimitTransactionForMonth;
+	}
+
 }

@@ -60,6 +60,14 @@ public class TransferController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String username = auth.getName(); 
 		User giverUser = userRepo.findByUsername(username);
+		if(giverUser.getLimitTransactionForDay() < giverUser.getTempLimitTransactionForDay() + transaction.getAmountTransaction()){
+			bindingResult.rejectValue("amountTransaction","error_code","This value exceeds the set daily limit");
+			return "bank2";
+		}
+		if (giverUser.getLimitTransactionForMonth() < giverUser.getTempLimitTransactionForMonth() + transaction.getAmountTransaction()){
+			bindingResult.rejectValue("amountTransaction","error_code","This value exceeds the set monthly limit");
+			return "bank2";
+		}
 		transferValue(transaction,giverUser,transaction.getRecipientUser());
 		transaction.setGiverAccountNumber(giverUser.getAccountNumber());
 		repo.save(transaction);
@@ -78,23 +86,38 @@ public class TransferController {
 	
 	@Transactional(readOnly = false,rollbackFor = Exception.class)
 	public void transferValue(Transaction transaction,User giverUser,User recipientUser) {
-		
 		double value = transaction.getAmountTransaction();
 		long giverId = giverUser.getId();
 		long recipientId = recipientUser.getId();
 		double giverValue = giverUser.getAccountValue();
 		double recipientValue = recipientUser.getAccountValue();
+		double tempLimitTransactionForDay = giverUser.getTempLimitTransactionForDay();
+		double tempLimitTransactionForMonth = giverUser.getTempLimitTransactionForMonth();
+		boolean isDayLimitDiffThanZero = giverUser.getLimitTransactionForDay() != 0;
+		boolean isMonthLimitDiffThanZero = giverUser.getLimitTransactionForMonth() != 0;
 		if(giverUser.getAccountValue() >= value) {
 			giverValue = giverValue - value;
 			recipientValue = recipientValue + value;
 			giverValue = BigDecimal.valueOf(giverValue).setScale(2, RoundingMode.HALF_UP).doubleValue();
 			recipientValue = BigDecimal.valueOf(recipientValue).setScale(2, RoundingMode.HALF_UP).doubleValue();
+			if (isDayLimitDiffThanZero){
+				tempLimitTransactionForDay = tempLimitTransactionForDay + transaction.getAmountTransaction();
+			}
+			if (isMonthLimitDiffThanZero){
+				tempLimitTransactionForMonth = tempLimitTransactionForMonth + transaction.getAmountTransaction();
+			}
 		}else {
 			throw new IllegalArgumentException("Must be possive value");
 		}
 		try {
 			userRepo.updateAccountValue(giverValue, giverId);
 			userRepo.updateAccountValue(recipientValue, recipientId);
+			if (isDayLimitDiffThanZero){
+				userRepo.updateTempLimitTransactionForDay(tempLimitTransactionForDay,giverId);
+			}
+			if (isMonthLimitDiffThanZero){
+				userRepo.updateTempLimitTransactionForMonth(tempLimitTransactionForMonth,giverId);
+			}
 			transaction.getUsers().add(recipientUser);
 			recipientUser.getTransactions().add(transaction);
 			transaction.getUsers().add(giverUser);

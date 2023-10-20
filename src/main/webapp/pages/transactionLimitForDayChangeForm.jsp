@@ -31,24 +31,26 @@
     <div class="row">
         <div class="col-lg-12">
                 <form:form method="post" modelAttribute="user">
-                <div class="col-lg-12" style="font-size:36px;font-weight:bold;color:black;margin-top:50px;text-align:center;">Change bank password</div>
+                <div class="col-lg-12" style="font-size:36px;font-weight:bold;color:black;margin-top:50px;text-align:center;">Change transaction limits for day</div>
                 <div class="form-group" style="margin-top:50px;margin-left:10px;">
-                    <label>Actual Password:</label>
+                    <label>Actual limit: ${loggedUser.getLimitTransactionForDay()}</label>
+                </div>
+                <div class="form-group" style="margin-top:50px;margin-left:10px;">
+                    <label>New limits</label>
+                    <form:input path="limitTransactionForDay" placeholder="0 PLN" type="number" step="1" min="0" max="10000000" class="form-control" style="border:1px solid black;margin-bottom:5px;margin-top:5px;"/>
+                    <form:errors path="limitTransactionForDay" style="color:red;" class="form-text text-muted"/>
+                </div>
+                <div class="form-group" style="margin-top:20px;margin-left:10px;">
+                    <label>Confirm by password:</label>
                     <form:input path="confirmPassword" placeholder="" type="password" class="form-control" style="border:1px solid black;margin-bottom:5px;margin-top:5px;"/>
                     <form:errors path="confirmPassword" style="color:red;" class="form-text text-muted"/>
                 </div>
                 <div class="form-group" style="margin-top:20px;margin-left:10px;">
-                    <label>New Password</label>
-                    <form:input path="b4encryptPassword" placeholder="" type="password" class="form-control" style="border:1px solid black;margin-bottom:5px;margin-top:5px;"/>
-                    <form:errors path="b4encryptPassword" style="color:red;" class="form-text text-muted"/>
-                </div>
-                <div class="form-group" style="margin-top:20px;margin-left:10px;">
-                    <div style="color:red;">Password must have 6 characters</div>
-                    <div style="color:red;">Must have at least 1 digit</div>
-                    <div style="color:red;">Must have at least 1 uppercase and 1 lowercase</div>
+                    <div style="color:red;">No limit = 0</div>
+                    <div style="color:red;">Max limit = 10.000.000</div>
                 </div>
                 <div class="form-group" style="margin-top:40px;margin-left:10px;margin-bottom:70px;padding-left:15px;padding-right:15px;">
-                    <form:button type="submit" name="passwordChange" class="btn btn-success" style="width:46%;border:1px solid black;">Confirm</form:button>
+                    <form:button type="submit" class="btn btn-success" style="width:46%;border:1px solid black;">Confirm</form:button>
                     <a href="/bank" style="text-decoration:none;"><button type="button" class="btn btn-danger" style="width:46%;border:1px solid black;margin-left:7%;">Cancel</button></a>
                 </div>
                 </form:form>
@@ -56,6 +58,9 @@
     </div>
 </div>
 </div>
+
+
+
 <jsp:include page="footerTemplate.jsp" />
 <jsp:include page="bottomFixedDivTemplate.jsp" />
 <script src="../js/darkMode.js"></script>
