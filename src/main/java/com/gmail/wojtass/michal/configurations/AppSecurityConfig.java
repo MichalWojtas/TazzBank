@@ -11,8 +11,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.csrf.CsrfTokenRepository;
-import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
+//import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+//import org.springframework.security.web.csrf.CsrfTokenRepository;
+//import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -22,12 +23,15 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private UserDetailsService userDetailsService;
 
+	//Store tokens in HttpSession
+	/*
 	@Bean
 	public CsrfTokenRepository csrfTokenRepository() {
 		HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
 		repository.setHeaderName("X-CSRF-TOKEN");
 		return repository;
 	}
+	 */
 
 	@Bean
 	public AuthenticationProvider authenticationProvider() {
@@ -50,8 +54,10 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 		.logoutSuccessUrl("/logout-success").permitAll()
 		.and()
-		.csrf()
-		.csrfTokenRepository(csrfTokenRepository());
+		.csrf();
+		//.csrfTokenRepository(csrfTokenRepository()); //If want to keep tokens in HttpSession
+		//.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()); //If want to keep tokens in Cookie
+		//.and().apply(new JwtSecurityConfigurer()); // For JSON Web tokens
 	}
 
 	@Override

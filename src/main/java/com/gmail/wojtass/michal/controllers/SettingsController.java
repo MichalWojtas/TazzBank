@@ -122,4 +122,116 @@ public class SettingsController {
         }
     }
 
+    @RequestMapping("/bank/addressChangeForm")
+    public String addressChangeForm(Model model, @SessionAttribute("loggedUser") User user){
+        model.addAttribute("loggedUser",user);
+        return "addressChangeForm";
+    }
+
+    @GetMapping("/bank/addressChangeForm")
+    public String getAddressChangeForm(Model model, @ModelAttribute("user") User user){
+        model.addAttribute("user", user);
+        return "addressChangeForm";
+    }
+
+    @PostMapping("/bank/addressChangeForm")
+    public String postAddressChangeForm(@ModelAttribute("user") @Validated User user, BindingResult bindingResult){
+        User user2 = getUser2();
+        boolean checkPassword = BCrypt.checkpw(user.getConfirmPassword(),user2.getPassword());
+        if(!checkPassword){
+            bindingResult.rejectValue("confirmPassword", "error_code", "It's not your actual password");
+        }
+        if(bindingResult.hasFieldErrors("confirmPassword") || bindingResult.hasFieldErrors("address")) {
+            return "addressChangeForm";
+        }else {
+            user2.setAddress(user.getAddress());
+            repo.save(user2);
+            return "redirect:/bank";
+        }
+    }
+
+    @RequestMapping("/bank/addressCorrespondenceChangeForm")
+    public String addressCorrespondenceChangeForm(Model model, @SessionAttribute("loggedUser") User user){
+        model.addAttribute("loggedUser",user);
+        return "addressCorrespondenceChangeForm";
+    }
+
+    @GetMapping("/bank/addressCorrespondenceChangeForm")
+    public String getAddressCorrespondenceChangeForm(Model model, @ModelAttribute("user") User user){
+        model.addAttribute("user", user);
+        return "addressCorrespondenceChangeForm";
+    }
+
+    @PostMapping("/bank/addressCorrespondenceChangeForm")
+    public String postAddressCorrespondenceChangeForm(@ModelAttribute("user") @Validated User user, BindingResult bindingResult){
+        User user2 = getUser2();
+        boolean checkPassword = BCrypt.checkpw(user.getConfirmPassword(),user2.getPassword());
+        if(!checkPassword){
+            bindingResult.rejectValue("confirmPassword", "error_code", "It's not your actual password");
+        }
+        if(bindingResult.hasFieldErrors("confirmPassword") || bindingResult.hasFieldErrors("addressForCorrespondence")) {
+            return "addressCorrespondenceChangeForm";
+        }else {
+            user2.setAddressForCorrespondence(user.getAddressForCorrespondence());
+            repo.save(user2);
+            return "redirect:/bank";
+        }
+    }
+
+    @RequestMapping("/bank/emailChangeForm")
+    public String emailChangeForm(Model model, @SessionAttribute("loggedUser") User user){
+        model.addAttribute("loggedUser",user);
+        return "emailChangeForm";
+    }
+
+    @GetMapping("/bank/emailChangeForm")
+    public String getEmailChangeForm(Model model, @ModelAttribute("user") User user){
+        model.addAttribute("user", user);
+        return "emailChangeForm";
+    }
+
+    @PostMapping("/bank/emailChangeForm")
+    public String postEmailChangeForm(@ModelAttribute("user") @Validated User user, BindingResult bindingResult){
+        User user2 = getUser2();
+        boolean checkPassword = BCrypt.checkpw(user.getConfirmPassword(),user2.getPassword());
+        if(!checkPassword){
+            bindingResult.rejectValue("confirmPassword", "error_code", "It's not your actual password");
+        }
+        if(bindingResult.hasFieldErrors("confirmPassword") || bindingResult.hasFieldErrors("email")) {
+            return "emailChangeForm";
+        }else {
+            user2.setEmail(user.getEmail());
+            repo.save(user2);
+            return "redirect:/bank";
+        }
+    }
+
+    @RequestMapping("/bank/phoneNumberChangeForm")
+    public String phoneNumberChangeForm(Model model, @SessionAttribute("loggedUser") User user){
+        model.addAttribute("loggedUser",user);
+        return "phoneNumberChangeForm";
+    }
+
+    @GetMapping("/bank/phoneNumberChangeForm")
+    public String getPhoneNumberChangeForm(Model model, @ModelAttribute("user") User user){
+        model.addAttribute("user", user);
+        return "phoneNumberChangeForm";
+    }
+
+    @PostMapping("/bank/phoneNumberChangeForm")
+    public String postPhoneNumberChangeForm(@ModelAttribute("user") @Validated User user, BindingResult bindingResult){
+        User user2 = getUser2();
+        boolean checkPassword = BCrypt.checkpw(user.getConfirmPassword(),user2.getPassword());
+        if(!checkPassword){
+            bindingResult.rejectValue("confirmPassword", "error_code", "It's not your actual password");
+        }
+        if(bindingResult.hasFieldErrors("confirmPassword") || bindingResult.hasFieldErrors("phoneNumber")) {
+            return "phoneNumberChangeForm";
+        }else {
+            user2.setPhoneNumber(user.getPhoneNumber());
+            repo.save(user2);
+            return "redirect:/bank";
+        }
+    }
+
 }

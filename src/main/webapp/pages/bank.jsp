@@ -63,7 +63,7 @@
                     <div class="divForTextInDropdown-itemForDropdownMenu1">
                     My finances</div></div>
                 </a></div>
-                <div><a class="dropdown-item" href="#">
+                <div><a class="dropdown-item" href="#" data-bs-toggle="dropdown" data-bs-target="#myDataDropdownMenu" data-bs-auto-close="outside">
                     <div class="wrapperForIconInDropdown-itemForDropdownMenu1">
                         <div class="divIconInDropdown-itemForDropdownMenu1">
                             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="black" class="bi bi-person-fill" viewBox="0 0 16 16"><path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
@@ -71,7 +71,56 @@
                     <div class="wrapperForTextInDropdown-itemForDropdownMenu1">
                         <div class="divForTextInDropdown-itemForDropdownMenu1">
                     My data</div></div>
-                </a></div>
+                </a>
+                <div class="dropdown-menu" id="myDataDropdownMenu">
+                    <div><a class ="dropdown-item" style="color:black;font-weight:bold;font-size:18px;background-color:#ccc;padding-left:50px;border-bottom:2px solid black;text-align:left;line-height:3;">
+                        My data
+                    </a></div>
+                    <div><a class ="dropdown-item" style="display:block;padding-top:10px;border-bottom:2px solid black;">
+                        <div class="settingsLeftDivText">Personal data</div>
+                        <div class="settingsRightDivChange">
+                            <div class="settingsButtonForChange" id="togglePersonalDataDropdownMenu" aria-haspopup="true" aria-expanded="false" data-bs-toggle="dropdown" data-bs-target="#personalDataDropdownMenu" >Open</div>
+                        </div>
+                        </a>
+                        <div id="personalDataDropdownMenu">
+                            <div><a class="dropdown-item" style="display:block;padding-top:10px;height:auto;padding-left:50px;padding-right:50px;">
+                                <div class="personalDataTopDivText">Surname and firstname</div>
+                                <div class="personalDataBottomDivText">
+                                    ${loggedUser.getLastName()} ${loggedUser.getFirstName()}
+                                </div>
+                            </a></div>
+                            <div class="dropdown-item"style="display:block;padding-top:10px;height:auto;padding-left:50px;padding-right:50px;">
+                                <div class="personalDataTopDivText">Address</div>
+                                <div class="personalDataBottomDivText">
+                                    ${loggedUser.getAddress()}
+                                </div>
+                                <div class="personalDataButtonChange"><a href="http://localhost:8080/bank/addressChangeForm" style="display:block;text-decoration:none;color:inherit;display:block;">Change</a></div>
+                            </div>
+                            <div class="dropdown-item"style="display:block;padding-top:10px;height:auto;padding-left:50px;padding-right:50px;">
+                                <div class="personalDataTopDivText">Address for correspondence</div>
+                                <div class="personalDataBottomDivText">
+                                    ${loggedUser.getAddressForCorrespondence()}
+                                </div>
+                                <div class="personalDataButtonChange"><a href="http://localhost:8080/bank/addressCorrespondenceChangeForm" style="display:block;text-decoration:none;color:inherit;display:block;">Change</a></div>
+                            </div>
+                            <div class ="dropdown-item"style="display:block;padding-top:10px;height:auto;padding-left:50px;padding-right:50px;">
+                                <div class="personalDataTopDivText">Authorization phone</div>
+                                <div class="personalDataBottomDivText">
+                                    ${loggedUser.getPhoneNumber()}
+                                </div>
+                                <div class="personalDataButtonChange"><a href="http://localhost:8080/bank/phoneNumberChangeForm" style="display:block;text-decoration:none;color:inherit;display:block;">Change</a></div>
+                            </div>
+                            <div class ="dropdown-item"style="display:block;padding-top:10px;height:auto;padding-left:50px;padding-right:50px;">
+                                <div class="personalDataTopDivText">Email</div>
+                                <div class="personalDataBottomDivText">
+                                    ${loggedUser.getEmail()}
+                                </div>
+                                <div class="personalDataButtonChange"><a href="http://localhost:8080/bank/emailChangeForm" style="display:block;text-decoration:none;color:inherit;display:block;">Change</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
                 <div><a class="dropdown-item" href="#" id="settingsDropdown" data-bs-toggle="dropdown" data-bs-target="#settingsDropdownMenu">
                     <div class="wrapperForIconInDropdown-itemForDropdownMenu1">
                         <div class="divIconInDropdown-itemForDropdownMenu1">
@@ -190,23 +239,29 @@
         <button class="circleButtonsLeft" type="button" data-bs-toggle="dropdown" data-bs-target="#addFundsDropdown" >
         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="red" class="bi bi-cash" viewBox="0 0 16 16"><path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/><path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z"/>
         </svg></button>
-        <div class="dropdown-menu" id="addFundsDropdown">
-            <div class="dropdown-item">
-                <strong>Add funds into account</strong>
+        <div class="dropdown-menu" id="addFundsDropdown" style="padding-left:80px;padding-right:80px;">
+        <div class="dropdown-item" style="height:auto;">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                        <form:form method="post" modelAttribute="user">
+                        <div class="col-lg-12" style="font-size:36px;font-weight:bold;color:black;margin-top:50px;text-align:center;">Add funds</div>
+                        <div class="form-group" style="margin-top:50px;margin-left:10px;">
+                            <label>Choose account</label>
+                        </div>
+                        <div class="form-group" style="margin-top:50px;margin-left:10px;">
+                            <label>Amount:</label>
+                            <form:input path="accountValue" placeholder="0.00 PLN" type="number" step="0.01" min="0" class="form-control" style="border:1px solid black;margin-bottom:5px;margin-top:5px;"/>
+                            <form:errors path="accountValue" style="color:red;" class="form-text text-muted"/>
+                        </div>
+                        <div class="form-group" style="margin-top:40px;margin-left:10px;margin-bottom:70px;padding-left:15px;padding-right:15px;">
+                            <form:button type="submit" name="addValue" class="btn btn-success" style="width:46%;border:1px solid black;">Confirm</form:button>
+                        </div>
+                        </form:form>
+                </div>
             </div>
-            <div class="dropdown-item">
-                Choose account
-            </div>
-            <div class="dropdown-item" id="dropdownItemForm">
-                <form:form method="post" modelAttribute="user">
-                    <div class="form-group">
-                	    <label>Amount:</label>
-                		<form:input path="accountValue" placeholder="0.00 PLN" type="number" step="0.01" min="0" class="form-control" style="width:30%;margin-top:4px;border:1px solid black;"/>
-                		<form:errors path="accountValue" style="color:red" class="form-number number-muted"/>
-                	</div>
-                		<form:button name="addValue" type="submit" class="btn btn-success" style="margin-top:8px;border:1px solid black;">Confirm</form:button>
-                	</form:form>
-            </div>
+        </div>
+        </div>
         </div>
         <div class="text-under-circleButtons">Add funds</div>
         </div>
@@ -236,6 +291,19 @@
         }else{
             item2.style.display = "none";
             innerLimitsIsOpen = false;
+        }
+    });
+    <!-- Personal Data inner dropdown opener -->
+    const triggerDivMyData = document.getElementById("togglePersonalDataDropdownMenu");
+    const itemMyData = document.getElementById("personalDataDropdownMenu");
+    var innerPersonalDataIsOpen = false;
+    triggerDivMyData.addEventListener("click",function (){
+        if(!innerPersonalDataIsOpen){
+            itemMyData.style.display = "block";
+            innerPersonalDataIsOpen = true;
+        }else{
+            itemMyData.style.display = "none";
+            innerPersonalDataIsOpen = false;
         }
     });
 </script>

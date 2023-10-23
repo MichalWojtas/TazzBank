@@ -68,6 +68,15 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- For JSON web tokens -->
+		<!--
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>0.9.1</version>
+		</dependency>
+		-->
+
 		<!-- <dependency>
     <groupId>org.clojure</groupId>
     <artifactId>java.jdbc</artifactId>

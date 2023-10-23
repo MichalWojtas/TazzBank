@@ -63,11 +63,14 @@ public class User {
 	@Pattern(regexp = "[0-9]{11}", message="Pesel should countains 11 digits.")
 	@Column(name = "pesel")
 	private String pesel;
-	
-	@Pattern(regexp = "[0-9]{9}", message="Wrong phone number format, whithout international prefix.")
+
+	//This i could split to contactNumber and authorizationNumber if necessary, should be with international prefix and if necessary with compare that phoneNumber exists in DB
+	@Pattern(regexp = "[0-9]{9}", message="Wrong phone number format, without international prefix.")
 	@Column(name = "phonenumber")
 	private String phoneNumber;
-	
+
+	//This i could split to more variables, as countryAddress,zipCodeAddress, town/placeAddress, streetAddress, numberOfTheBuildingAddress, apartmentNumberAddress and merge it to one string address for show. Same for correspondence.
+	//For now i stay with simple
 	@NotNull
 	@NotEmpty(message= "Can't be empty")
 	@NotBlank(message= "Can't be blank")

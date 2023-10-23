@@ -183,5 +183,49 @@ html, body {
     text-decoration:underline;
     display:inline-block;
 }
+.dropdown-menu#myDataDropdownMenu{
+    text-align:center;
+    width:95%;
+    margin-left:2.5% !important;
+    margin-top:2.5% !important;
+    padding:25px;
+    transition: all 0.4s ease-in-out;
+    animation:textanimationSettings 1.1s ease-in-out forwards;
+    background-color:#ccc;
+    border:var(--dropdownMenu1BorderColor);
+    border-radius:16px;
+    filter:var(--dropdownMenu1FilterShadow);
+}
+.personalDataTopDivText{
+    color:black;
+    width:100%;
+    display:block;
+    text-align:left;
+    font-size:18px;
+    font-weight:bold;
+}
+.personalDataBottomDivText{
+    color:black;
+    width:100%;
+    display:block;
+    text-align:left;
+    font-size:18px;
+}
+.personalDataButtonChange{
+    width:70px;
+    height:30px;
+    font-weight:500;
+    font-size:18px;
+    color:#EF0000;
+    text-decoration:underline;
+    text-align:left;
+    display:block;
+}
+#personalDataDropdownMenu{
+    display:none;
+    background-color:#b0b0b0;
+    padding-top:20px;
+    padding-bottom:20px;
+}
 
 

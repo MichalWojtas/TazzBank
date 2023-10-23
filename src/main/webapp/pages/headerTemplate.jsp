@@ -41,7 +41,7 @@
                         <div class="divForTextInDropdown-itemForDropdownMenu1">
                     My finances</div></div>
                 </a></div>
-                <div><a class="dropdown-item" href="#">
+                <div><a class="dropdown-item" href="#" data-bs-toggle="dropdown" data-bs-target="#myDataDropdownMenu" data-bs-auto-close="outside">
                      <div class="wrapperForIconInDropdown-itemForDropdownMenu1">
                         <div class="divIconInDropdown-itemForDropdownMenu1">
                             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="black" class="bi bi-person-fill" viewBox="0 0 16 16"><path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
@@ -49,7 +49,56 @@
                      <div class="wrapperForTextInDropdown-itemForDropdownMenu1">
                         <div class="divForTextInDropdown-itemForDropdownMenu1">
                      My data</div></div>
-                </a></div>
+                </a>
+                <div class="dropdown-menu" id="myDataDropdownMenu">
+                    <div><a class ="dropdown-item" style="color:black;font-weight:bold;font-size:18px;background-color:#ccc;padding-left:50px;border-bottom:2px solid black;text-align:left;line-height:3;">
+                        My data
+                    </a></div>
+                    <div><a class ="dropdown-item" style="display:block;padding-top:10px;border-bottom:2px solid black;">
+                        <div class="settingsLeftDivText">Personal data</div>
+                        <div class="settingsRightDivChange">
+                            <div class="settingsButtonForChange" id="togglePersonalDataDropdownMenu" aria-haspopup="true" aria-expanded="false" data-bs-toggle="dropdown" data-bs-target="#personalDataDropdownMenu" >Open</div>
+                        </div>
+                        </a>
+                        <div id="personalDataDropdownMenu">
+                            <div><a class="dropdown-item" style="display:block;padding-top:10px;height:auto;padding-left:50px;padding-right:50px;">
+                                <div class="personalDataTopDivText">Surname and firstname</div>
+                                <div class="personalDataBottomDivText">
+                                    ${loggedUser.getLastName()} ${loggedUser.getFirstName()}
+                                </div>
+                            </a></div>
+                            <div class="dropdown-item"style="display:block;padding-top:10px;height:auto;padding-left:50px;padding-right:50px;">
+                                <div class="personalDataTopDivText">Address</div>
+                                <div class="personalDataBottomDivText">
+                                    ${loggedUser.getAddress()}
+                                </div>
+                                <div class="personalDataButtonChange"><a href="http://localhost:8080/bank/addressChangeForm" style="display:block;text-decoration:none;color:inherit;display:block;">Change</a></div>
+                            </div>
+                            <div class="dropdown-item"style="display:block;padding-top:10px;height:auto;padding-left:50px;padding-right:50px;">
+                                <div class="personalDataTopDivText">Address for correspondence</div>
+                                <div class="personalDataBottomDivText">
+                                    ${loggedUser.getAddressForCorrespondence()}
+                                </div>
+                                <div class="personalDataButtonChange"><a href="http://localhost:8080/bank/addressCorrespondenceChangeForm" style="display:block;text-decoration:none;color:inherit;display:block;">Change</a></div>
+                            </div>
+                            <div class ="dropdown-item"style="display:block;padding-top:10px;height:auto;padding-left:50px;padding-right:50px;">
+                                <div class="personalDataTopDivText">Authorization phone</div>
+                                <div class="personalDataBottomDivText">
+                                    ${loggedUser.getPhoneNumber()}
+                                </div>
+                                <div class="personalDataButtonChange"><a href="http://localhost:8080/bank/phoneNumberChangeForm" style="display:block;text-decoration:none;color:inherit;display:block;">Change</a></div>
+                            </div>
+                            <div class ="dropdown-item"style="display:block;padding-top:10px;height:auto;padding-left:50px;padding-right:50px;">
+                                <div class="personalDataTopDivText">Email</div>
+                                <div class="personalDataBottomDivText">
+                                    ${loggedUser.getEmail()}
+                                </div>
+                                <div class="personalDataButtonChange"><a href="http://localhost:8080/bank/emailChangeForm" style="display:block;text-decoration:none;color:inherit;display:block;">Change</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
                 <div><a class="dropdown-item" href="#" id="settingsDropdown" data-bs-toggle="dropdown" data-bs-target="#settingsDropdownMenu">
                                     <div class="wrapperForIconInDropdown-itemForDropdownMenu1">
                                         <div class="divIconInDropdown-itemForDropdownMenu1">
@@ -118,7 +167,7 @@
                                         <div class ="dropdown-item" style="display:block;padding-top:10px;border-bottom:2px solid black;">
                                             <div class="settingsLeftDivText">Authorization phone</div>
                                             <div class="settingsRightDivChange">
-                                                <div class="settingsButtonForChange"><a href="#" style="text-decoration:none;color:inherit;display:block;">Change</a></div>
+                                                <div class="settingsButtonForChange"><a href="http://localhost:8080/bank/phoneNumberChangeForm" style="text-decoration:none;color:inherit;display:block;">Change</a></div>
                                             </div>
                                         </div>
 
@@ -154,6 +203,19 @@
         }else{
             item2.style.display = "none";
             innerLimitsIsOpen = false;
+        }
+    });
+    <!-- Personal Data inner dropdown opener -->
+    const triggerDivMyData = document.getElementById("togglePersonalDataDropdownMenu");
+    const itemMyData = document.getElementById("personalDataDropdownMenu");
+    var innerPersonalDataIsOpen = false;
+    triggerDivMyData.addEventListener("click",function (){
+        if(!innerPersonalDataIsOpen){
+            itemMyData.style.display = "block";
+            innerPersonalDataIsOpen = true;
+        }else{
+            itemMyData.style.display = "none";
+            innerPersonalDataIsOpen = false;
         }
     });
 </script>
