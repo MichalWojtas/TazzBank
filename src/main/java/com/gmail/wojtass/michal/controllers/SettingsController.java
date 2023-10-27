@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -194,6 +193,9 @@ public class SettingsController {
     public String postEmailChangeForm(@ModelAttribute("user") @Validated User user, BindingResult bindingResult){
         User user2 = getUser2();
         boolean checkPassword = BCrypt.checkpw(user.getConfirmPassword(),user2.getPassword());
+        if(repo.existsByEmail(user.getEmail())) {
+            bindingResult.rejectValue("email", "err_code", "That email already exists.");
+        }
         if(!checkPassword){
             bindingResult.rejectValue("confirmPassword", "error_code", "It's not your actual password");
         }

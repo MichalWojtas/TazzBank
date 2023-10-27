@@ -6,19 +6,16 @@ import com.gmail.wojtass.michal.services.ServerInfoRepository;
 import com.gmail.wojtass.michal.services.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Period;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Component
-public class ResetLimitTransactions {
+public class ServerManagement {
 
     @Autowired
     UserRepository repo;
@@ -29,11 +26,13 @@ public class ResetLimitTransactions {
     /**
      * Created only for first application use to create first and for now only object of server info which contain LocalDateTime when last time limit was set to 0.
      */
+    @Transactional
     public void createServerInfoObjectToDB(){
-        if (serverInfoRepo.findById(73) == null){
-            ServerInfo serverInfo = new ServerInfo(73,LocalDateTime.now(),LocalDateTime.now());
+        if (serverInfoRepo.findByServerInfoId(1) == null) {
+            ServerInfo serverInfo = new ServerInfo(LocalDateTime.now(), LocalDateTime.now());
             serverInfoRepo.save(serverInfo);
         }
+
     }
 
 
@@ -43,7 +42,7 @@ public class ResetLimitTransactions {
      * Not tested, i don't check it works, but it should
      */
     public void checkLastResetAndResetIfMissed(){
-        ServerInfo serverInfo = serverInfoRepo.findById(73);
+        ServerInfo serverInfo = serverInfoRepo.findByServerInfoId(1);
         LocalDateTime lastTimeResetDayLimitTransactions = serverInfo.getLastResetDayTransactionLimitTime();
         LocalDateTime lastTimeResetMonthLimitTransactions = serverInfo.getLastResetMonthTransactionLimitTime();
         Duration durationDayDifference = Duration.between(lastTimeResetDayLimitTransactions,LocalDateTime.now());
@@ -73,13 +72,13 @@ public class ResetLimitTransactions {
      * Work, tested, it reset tempLimitTransactionForDay every day at 00:00:00
      */
     @Scheduled(cron = "0 0 0 * * ?")
-    private void resetTempLimitTransactionForDay() {
+    protected void resetTempLimitTransactionForDay() {
         List<User> users = repo.findAll();
         for (User user : users) {
             user.setTempLimitTransactionForDay(0);
             repo.save(user);
         }
-        ServerInfo serverInfo = serverInfoRepo.findById(73);
+        ServerInfo serverInfo = serverInfoRepo.findByServerInfoId(1);
         serverInfo.setLastResetDayTransactionLimitTime(LocalDateTime.now());
         serverInfoRepo.save(serverInfo);
     }
@@ -89,13 +88,13 @@ public class ResetLimitTransactions {
      * Its not tested
      */
     @Scheduled(cron = "0 0 0 1 * ?")
-    private void resetTempLimitTransactionForMonth() {
+    protected void resetTempLimitTransactionForMonth() {
         List<User> users = repo.findAll();
         for (User user : users) {
             user.setTempLimitTransactionForMonth(0);
             repo.save(user);
         }
-        ServerInfo serverInfo = serverInfoRepo.findById(73);
+        ServerInfo serverInfo = serverInfoRepo.findByServerInfoId(1);
         serverInfo.setLastResetMonthTransactionLimitTime(LocalDateTime.now());
         serverInfoRepo.save(serverInfo);
     }

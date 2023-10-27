@@ -26,14 +26,23 @@
 <div class="container-fluid" style="margin-bottom:70px;padding-left:53px;">
 	<div class="row">
 		<div class="col-lg-12"><div class="transactionAndAmountOnAccounts" style="font-size:36px;font-weight:bold;">Transaction</div></div>
-		<div class="col-lg-12"><div class="transactionAndAmountOnAccounts" style="font-size:28px;">Amount on your accounts: ${loggedUser.getAccountValue()}PLN</div></div>
+		<div class="col-lg-12"><div class="transactionAndAmountOnAccounts" style="font-size:28px;">Amount on your accounts: ${loggedUser.getAllAccountsValue()}PLN</div></div>
 	</div>
 </div>
 <div class="container-fluid" id="transactionFormBank2" style="margin-bottom:50px;padding-left:80px;padding-right:80px;">
 	<div class="row">
 	    <div class="col-lg-12">
 	        <form:form method="post" modelAttribute="transaction">
-			    <div class="form-group" style="margin-top:70px;margin-left:10px;">
+                <div class="form-group" style="margin-top:70px;margin-left:10px;">
+                    <label>Choose account</label>
+                    <select name="selectedAccount" class="form-control" style="border: 1px solid black; margin-bottom: 5px; margin-top: 5px;">
+                        <option value="0">Account 1</option>
+                        <option value="1">Account 2</option>
+                        <option value="2">Account 3</option>
+                        <option value="3">Account 4</option>
+                    </select>
+                </div>
+			    <div class="form-group" style="margin-top:20px;margin-left:10px;">
 				    <label>Account number:</label>
 				    <form:input path="recipientAccountNumber" placeholder="Account number..." type="text" style="border:1px solid black;margin-bottom:5px;margin-top:5px;" class="form-control"/>
 				    <form:errors path="recipientAccountNumber" style="color:red" class="form-text text-muted"/>

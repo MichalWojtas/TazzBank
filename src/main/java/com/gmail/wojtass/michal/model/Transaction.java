@@ -2,16 +2,8 @@ package com.gmail.wojtass.michal.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.Transient;
-import javax.validation.constraints.Max;
+import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -26,8 +18,10 @@ import org.hibernate.validator.constraints.Range;
 public class Transaction {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long idTransaction;
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "transaction_id_seq")
+	@SequenceGenerator(name = "transaction_id_seq", sequenceName = "transaction_id_seq", allocationSize = 1)
+	@Column(name = "transaction_id")
+	private long transactionId;
 	
 	@NotNull
 	@NotEmpty(message= "Can't be empty")
@@ -50,21 +44,24 @@ public class Transaction {
 	
 	@Pattern(regexp = "[0-9]{26}", message = "Wrong format. Account number should contains 26 numbers and only digits.")
 	private String giverAccountNumber;
-	
+
 	@Transient
 	private transient User recipientUser;
-	
+
+	@Transient
+	private transient User giverUser;
+
 	@ManyToMany(mappedBy = "transactions", fetch=FetchType.EAGER)
 	private List<User> users = new ArrayList<User>();
-	
-	public long getIdTransaction() {
-		return idTransaction;
+
+	public long getTransactionId() {
+		return transactionId;
 	}
-	
-	public void setIdTransaction(long idTransaction) {
-		this.idTransaction = idTransaction;
+
+	public void setTransactionId(long transactionId) {
+		this.transactionId = transactionId;
 	}
-	
+
 	public String getRecipientNameAndAddress() {
 		return recipientNameAndAddress;
 	}

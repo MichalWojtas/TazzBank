@@ -1,32 +1,26 @@
 package com.gmail.wojtass.michal.model;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.*;
 
-import org.springframework.context.annotation.Scope;
 import org.springframework.data.annotation.Transient;
 import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.stereotype.Component;
 
 @Entity
 @Table(name = "tazzuser")
 public class User {
 
+	public final static int MAX_STANDARD_ACCOUNTS = 4;
+
+	public final static int MAX_SAVING_ACCOUNTS = 4;
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id")
-	private long id;
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_seq")
+	@SequenceGenerator(name = "user_id_seq", sequenceName = "user_id_seq", allocationSize = 1)
+	@Column(name = "user_id")
+	private long userId;
 
 	@Email(message ="Email format required")
 	@NotEmpty(message= "Can't be empty")
@@ -59,7 +53,16 @@ public class User {
 	@Size(max = 254, message="You reach limit of characters")
 	@Column(name = "lastname")
 	private String lastName;
-	
+
+	@Column(name = "actual_number_of_standard_accounts")
+	private int actualNumberOfStandardAccounts;
+
+	@Column(name = "actual_number_of_saving_accounts")
+	private int actualNumberOfSavingAccounts;
+
+	@OneToMany(mappedBy = "user")
+	private List<AccountBank> accountsBank = new ArrayList<>(MAX_STANDARD_ACCOUNTS+MAX_SAVING_ACCOUNTS);
+
 	@Pattern(regexp = "[0-9]{11}", message="Pesel should countains 11 digits.")
 	@Column(name = "pesel")
 	private String pesel;
@@ -94,28 +97,28 @@ public class User {
 	@Transient
 	@Column(name = "confirmPassword")
 	private transient String confirmPassword;
-	
-	@Column(name = "account_value")
-	@Min(value = 0,message = "Account value can't be negative")
-	private double accountValue = 0;
-	
-	@Column(name = "account_number", unique = true)
-	private String accountNumber;
+
+	@Column(name = "all_accounts_value", columnDefinition = "double precision default 0")
+	private double allAccountsValue = 0;
+
+	@Transient
+	@Min(value = 0,message = "Accounts value can't be negative")
+	private transient double tmpValue = 0;
 
 	@Max(value = 10000000,message = "Max value for limit transaction is set as 10.000.000")
 	@Min(value = 0,message = "Limit transaction can't be negative")
-	@Column(name = "limit_transaction_for_day", columnDefinition = "double default 0")
+	@Column(name = "limit_transaction_for_day", columnDefinition = "double precision default 0")
 	private double limitTransactionForDay = 0;
 
 	@Max(value = 10000000,message = "Max value for limit transaction is set as 10.000.000")
 	@Min(value = 0,message = "Limit transaction can't be negative")
-	@Column(name = "limit_transaction_for_month", columnDefinition = "double default 0")
+	@Column(name = "limit_transaction_for_month", columnDefinition = "double precision default 0")
 	private double limitTransactionForMonth = 0;
 
-	@Column(name = "temp_limit_transaction_for_day", columnDefinition = "double default 0")
+	@Column(name = "temp_limit_transaction_for_day", columnDefinition = "double precision default 0")
 	private double tempLimitTransactionForDay = 0;
 
-	@Column(name = "temp_limit_transaction_for_month", columnDefinition = "double default 0")
+	@Column(name = "temp_limit_transaction_for_month", columnDefinition = "double precision default 0")
 	private double tempLimitTransactionForMonth = 0;
 
 	@ManyToMany(fetch=FetchType.EAGER)
@@ -141,16 +144,14 @@ public class User {
 	public void setB4encryptPassword(String b4encryptPassword) {
 		this.b4encryptPassword = b4encryptPassword;
 	}
-	
-	public long getId() {
-		return id;
+
+	public long getUserId() {
+		return userId;
 	}
 
-
-	public void setId(long id) {
-		this.id = id;
+	public void setUserId(long userId) {
+		this.userId = userId;
 	}
-
 
 	public String getConfirmPassword() {
 		return confirmPassword;
@@ -225,13 +226,14 @@ public class User {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public double getAccountValue() {
-		return accountValue;
+	public double getAllAccountsValue() {
+		return allAccountsValue;
 	}
 
-	public void setAccountValue(double accountValue) {
-		this.accountValue = accountValue;
+	public void setAllAccountsValue(double allAccountsValue) {
+		this.allAccountsValue = allAccountsValue;
 	}
+
 
 	public String getAddress() {
 		return address;
@@ -247,14 +249,6 @@ public class User {
 
 	public void setAddressForCorrespondence(String addressForCorrespondence) {
 		this.addressForCorrespondence = addressForCorrespondence;
-	}
-
-	public String getAccountNumber() {
-		return accountNumber;
-	}
-
-	public void setAccountNumber(String accountNumber) {
-		this.accountNumber = accountNumber;
 	}
 
 	public List<Transaction> getTransactions() {
@@ -297,4 +291,43 @@ public class User {
 		this.tempLimitTransactionForMonth = tempLimitTransactionForMonth;
 	}
 
+
+
+	public int getActualNumberOfStandardAccounts() {
+		return actualNumberOfStandardAccounts;
+	}
+
+	public void setActualNumberOfStandardAccounts(int actualNumberOfStandardAccounts) {
+		this.actualNumberOfStandardAccounts = actualNumberOfStandardAccounts;
+	}
+
+	public int getActualNumberOfSavingAccounts() {
+		return actualNumberOfSavingAccounts;
+	}
+
+	public void setActualNumberOfSavingAccounts(int actualNumberOfSavingAccounts) {
+		this.actualNumberOfSavingAccounts = actualNumberOfSavingAccounts;
+	}
+
+	public List<AccountBank> getAccountsBank() {
+		return accountsBank;
+	}
+
+
+	public int getAccountBankIndex(long id){
+		for (int i = 0; i < accountsBank.size(); i++) {
+			if (accountsBank.get(i).getAccountBankId() == id){
+				return i;
+			}
+		}
+		return -1; //Should never happen
+	}
+
+	public double getTmpValue() {
+		return tmpValue;
+	}
+
+	public void setTmpValue(double tmpValue) {
+		this.tmpValue = tmpValue;
+	}
 }

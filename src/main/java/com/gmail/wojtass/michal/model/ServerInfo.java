@@ -8,9 +8,10 @@ import java.time.LocalDateTime;
 public class ServerInfo {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private long id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "server_info_id_seq")
+    @SequenceGenerator(name = "server_info_id_seq", sequenceName = "server_info_id_seq", allocationSize = 1)
+    @Column(name = "server_info_id")
+    private long serverInfoId;
 
     @Column(name = "limit_transaction_for_day")
     private LocalDateTime lastResetDayTransactionLimitTime = LocalDateTime.now();
@@ -31,8 +32,7 @@ public class ServerInfo {
     public ServerInfo() {
     }
 
-    public ServerInfo(long id, LocalDateTime lastResetDayTransactionLimitTime, LocalDateTime lastResetMonthTransactionLimitTime) {
-        this.id = id;
+    public ServerInfo(LocalDateTime lastResetDayTransactionLimitTime, LocalDateTime lastResetMonthTransactionLimitTime) {
         this.lastResetDayTransactionLimitTime = lastResetDayTransactionLimitTime;
         this.lastResetMonthTransactionLimitTime = lastResetMonthTransactionLimitTime;
     }
@@ -53,11 +53,11 @@ public class ServerInfo {
         this.lastResetMonthTransactionLimitTime = lastResetMonthTransactionLimitTime;
     }
 
-    public long getId() {
-        return id;
+    public long getServerInfoId() {
+        return serverInfoId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setServerInfoId(long serverInfoId) {
+        this.serverInfoId = serverInfoId;
     }
 }
