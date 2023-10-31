@@ -19,51 +19,51 @@
 			<div class="form-group">
 				<label>Login</label>
 				<form:input path="username" placeholder="Username" type="text" class="form-control"/>
-				<form:errors path="username" style="color:red" class="form-text text-muted"/>
+				<form:errors path="username" style="color:red" class="form-text"/>
 			</div>
 		<div class="form-group">
 			<label>Password</label>
 			<form:input path="b4encryptPassword" placeholder="Password" type="password" class="form-control"/>
-			<form:errors path="b4encryptPassword" style="color:red" class="form-text text-muted"/>
+			<form:errors path="b4encryptPassword" style="color:red" class="form-text"/>
 		<br/>
 			<label>Confirm password</label>
 			<form:input path="confirmPassword" placeholder="Confirm password" type="password" class="form-control"/>
-			<form:errors path="confirmPassword" style="color:red" class="form-text text-muted"/>
+			<form:errors path="confirmPassword" style="color:red" class="form-text"/>
 		</div>
 		
 		<div class="form-group">
 			<label>Email</label>
 			<form:input path="email" placeholder="Email" type="text" class="form-control"/>
-			<form:errors path="email" style="color:red" class="form-text text-muted" />
+			<form:errors path="email" style="color:red" class="form-text" />
 		</div>
 		<div class="form-group">
 			<label>First name</label>
 			<form:input path="firstName" placeholder="First name" type="text" class="form-control"/>
-			<form:errors path="firstName" style="color:red" class="form-text text-muted" />
+			<form:errors path="firstName" style="color:red" class="form-text" />
 			<br>
 			<label>Second name</label>
 			<form:input path="secondName" placeholder="Second name" type="text" class="form-control"/>
-			<form:errors path="secondName" style="color:red" class="form-text text-muted" />
+			<form:errors path="secondName" style="color:red" class="form-text" />
 			<br>
 			<label>Last name</label>
 			<form:input path="lastName" placeholder="Last name" type="text" class="form-control"/>
-			<form:errors path="lastName" style="color:red" class="form-text text-muted" />
+			<form:errors path="lastName" style="color:red" class="form-text" />
 			<br>
 			<label>Pesel</label>
 			<form:input path="pesel" placeholder="Pesel" type="text" class="form-control"/>
-			<form:errors path="pesel" style="color:red" class="form-text text-muted" />
+			<form:errors path="pesel" style="color:red" class="form-text" />
 			<br>
 			<label>Phone number</label>
 			<form:input path="phoneNumber" placeholder="Phone number" type="text" class="form-control"/>
-			<form:errors path="phoneNumber" style="color:red" class="form-text text-muted" />
+			<form:errors path="phoneNumber" style="color:red" class="form-text" />
 			<br>
 			<label>Address</label>
 			<form:input path="address" placeholder="Address" type="text" class="form-control"/>
-			<form:errors path="address" style="color:red" class="form-text text-muted" />
+			<form:errors path="address" style="color:red" class="form-text" />
 			<br>
 			<label>Correspondence address</label>
 			<form:input path="addressForCorrespondence" placeholder="Correspondence address" type="text" class="form-control"/>
-			<form:errors path="addressForCorrespondence" style="color:red" class="form-text text-muted" />
+			<form:errors path="addressForCorrespondence" style="color:red" class="form-text" />
 			<br>
 		</div>
 		<form:button type="submit" class="btn btn-success">Register</form:button>

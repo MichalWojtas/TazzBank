@@ -23,33 +23,33 @@
 <jsp:include page="headerTemplate.jsp" />
 <div class = "container-fluid" style="margin-bottom:20px;">
     <div class ="row">
-        <div class = "col-lg-12" id="welcomeText">${welcomeText}, ${loggedUser.getUsername()}</div>
+        <div class = "col-lg-12" id="welcomeText">${welcomeText}, ${loggedUser.getFirstName()}</div>
     </div>
 </div>
 <div class="container-fluid">
-<div class="mainSeparateForm" style="margin-bottom:50px;padding-left:80px;padding-right:80px;">
+<div class="mainSeparateForm">
     <div class="row">
         <div class="col-lg-12">
                 <form:form method="post" modelAttribute="user">
-                <div class="col-lg-12" style="font-size:36px;font-weight:bold;color:black;margin-top:50px;text-align:center;">Change bank password</div>
-                <div class="form-group" style="margin-top:50px;margin-left:10px;">
-                    <label>Actual Password:</label>
-                    <form:input path="confirmPassword" placeholder="" type="password" class="form-control" style="border:1px solid black;margin-bottom:5px;margin-top:5px;"/>
-                    <form:errors path="confirmPassword" style="color:red;" class="form-text text-muted"/>
+                <div class="col-lg-12 headerFormTemplate">Change bank password</div>
+                <div class="form-group formGroupTopTemplate">
+                    <label class="labelFormTemplate">Actual Password:</label>
+                    <form:input path="confirmPassword" placeholder="" type="password" class="form-control inputControlFormTemplate"/>
+                    <form:errors path="confirmPassword" class="form-text errorTextFormTemplate"/>
                 </div>
-                <div class="form-group" style="margin-top:20px;margin-left:10px;">
-                    <label>New Password</label>
-                    <form:input path="b4encryptPassword" placeholder="" type="password" class="form-control" style="border:1px solid black;margin-bottom:5px;margin-top:5px;"/>
-                    <form:errors path="b4encryptPassword" style="color:red;" class="form-text text-muted"/>
+                <div class="form-group formGroupMidTemplate">
+                    <label class="labelFormTemplate">New Password</label>
+                    <form:input path="b4encryptPassword" placeholder="" type="password" class="form-control inputControlFormTemplate"/>
+                    <form:errors path="b4encryptPassword" class="form-text errorTextFormTemplate"/>
                 </div>
-                <div class="form-group" style="margin-top:20px;margin-left:10px;">
-                    <div style="color:red;">Password must have 6 characters</div>
-                    <div style="color:red;">Must have at least 1 digit</div>
-                    <div style="color:red;">Must have at least 1 uppercase and 1 lowercase</div>
+                <div class="form-group formGroupMidTemplate">
+                    <div class="additionalInformationFormTemplate">Password must have 6 characters</div>
+                    <div class="additionalInformationFormTemplate">Must have at least 1 digit</div>
+                    <div class="additionalInformationFormTemplate">Must have at least 1 uppercase and 1 lowercase</div>
                 </div>
-                <div class="form-group" style="margin-top:40px;margin-left:10px;margin-bottom:70px;padding-left:15px;padding-right:15px;">
-                    <form:button type="submit" name="passwordChange" class="btn btn-success" style="width:46%;border:1px solid black;">Confirm</form:button>
-                    <a href="/bank" style="text-decoration:none;"><button type="button" class="btn btn-danger" style="width:46%;border:1px solid black;margin-left:7%;">Cancel</button></a>
+                <div class="form-group formGroupBotTemplate">
+                    <form:button type="submit" name="passwordChange" class="btn btn-success buttonSubmitFormTemplate">Confirm</form:button>
+                    <a href="/bank" class="buttonCancelLinkFormTemplate"><button type="button" class="btn btn-danger buttonCancelFormTemplate">Cancel</button></a>
                 </div>
                 </form:form>
         </div>

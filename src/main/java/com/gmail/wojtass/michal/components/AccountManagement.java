@@ -8,8 +8,10 @@ import org.springframework.aop.AopInvocationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.BindingResult;
 
 import java.math.BigInteger;
+import java.util.*;
 
 @Component
 public class AccountManagement {
@@ -21,6 +23,7 @@ public class AccountManagement {
     AccountBankRepository accountBankRepository;
 
     /**
+     * For registration.
      * Method for adding new standard account if user need more than 1, there is max set as MAX_STANDARD_ACCOUNTS in User
      * Transactional added because if something goes wrong we don't want to change actualNumberOfStandardAccounts value and don't want to create new accountNumber
      * @param user User, user who is logged in application
@@ -31,28 +34,44 @@ public class AccountManagement {
         if (user.getActualNumberOfStandardAccounts() < User.MAX_STANDARD_ACCOUNTS){
             AccountBank accountBank = new AccountBank(user,generateAccountNumber(), AccountBank.AccountType.STANDARD);
             user.setActualNumberOfStandardAccounts(user.getActualNumberOfStandardAccounts()+1);
+            accountBank.setAccountName("Account 1");
             repo.save(user);
             accountBankRepository.save(accountBank);
             return true;
         }
         return false;
     }
+
     /**
+     * For create next account in SettingController, addAccountForm.
+     * Method for adding new standard account if user need more than 1, there is max set as MAX_STANDARD_ACCOUNTS in User
+     * Transactional added because if something goes wrong we don't want to change actualNumberOfStandardAccounts value and don't want to create new accountNumber
+     * @param user User, user who is logged in application
+     */
+    public void addNewStandardAccount(User user, AccountBank accountBank, BindingResult bindingResult){
+        if (user.getActualNumberOfStandardAccounts() < User.MAX_STANDARD_ACCOUNTS){
+            accountBank.setUser(user);
+            accountBank.setAccountNumber(generateAccountNumber());
+            user.setActualNumberOfStandardAccounts(user.getActualNumberOfStandardAccounts()+1);
+        }else {
+            bindingResult.rejectValue("addAccountSuccessful","error_code","You have reached your standard account limit");
+        }
+    }
+
+    /**
+     * For create next account in SettingController, addAccountForm.
      * Method for adding new saving account if user need more than 1, there is max set as MAX_SAVING_ACCOUNTS in User
      * Transactional added because if something goes wrong we don't want to change actualNumberOfSavingAccounts value and don't want to create new accountNumber
      * @param user User, user who is logged in application
-     * @return boolean means true successful add, false means there was too much saving accounts created
      */
-    @Transactional(readOnly = false,rollbackFor = Exception.class)
-    public boolean addNewSavingAccount(User user){
+    public void addNewSavingAccount(User user, AccountBank accountBank, BindingResult bindingResult){
         if (user.getActualNumberOfSavingAccounts() < User.MAX_SAVING_ACCOUNTS){
-            AccountBank accountBank = new AccountBank(user,generateAccountNumber(), AccountBank.AccountType.SAVING);
+            accountBank.setUser(user);
+            accountBank.setAccountNumber(generateAccountNumber());
             user.setActualNumberOfSavingAccounts(user.getActualNumberOfSavingAccounts()+1);
-            repo.save(user);
-            accountBankRepository.save(accountBank);
-            return true;
+        }else {
+            bindingResult.rejectValue("addAccountSuccessful","error_code","You have reached your saving account limit");
         }
-        return false;
     }
 
     /**
@@ -113,5 +132,16 @@ public class AccountManagement {
             value += accountBank.getAccountValue();
         }
         user.setAllAccountsValue(value);
+    }
+
+    public void sss(TreeSet<AccountBank> list, User loggedUser){
+        Set<AccountBank> accountsBank = loggedUser.getAccountsBank();
+        List<AccountBank> list1 = new ArrayList<>(list);
+        list1.sort(new Comparator<AccountBank>() {
+            @Override
+            public int compare(AccountBank o1, AccountBank o2) {
+                return Long.compare(o1.getAccountBankId(),o2.getAccountBankId());
+            }
+        });
     }
 }

@@ -29,9 +29,9 @@
                         <div style="border: 2px solid red; border-radius:120px;height:48px;width:48px;align-content:center;justify-content:center;line-height:35px;background-color:#0f0f0f;margin-bottom:3px;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="red" class="bi bi-person-fill" viewBox="0 0 16 16"><path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
                             </svg>
-                    </div>${loggedUser.getLastName()} ${loggedUser.getUsername()}</div>
+                    </div>${loggedUser.getLastName()} ${loggedUser.getFirstName()}</div>
                 </div>
-                <div><a class="dropdown-item" href="#">
+                <div><a class="dropdown-item" href="#" data-bs-toggle="dropdown" data-bs-target="#myFinancesDropdownMenu" data-bs-auto-close="outside">
                     <div class="wrapperForIconInDropdown-itemForDropdownMenu1">
                         <div class="divIconInDropdown-itemForDropdownMenu1">
                             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="black" class="bi bi-card-list" viewBox="0 0 16 16"><path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/><path d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-1-5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zM4 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm0 2.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z"/>
@@ -40,7 +40,19 @@
                     <div class="wrapperForTextInDropdown-itemForDropdownMenu1">
                         <div class="divForTextInDropdown-itemForDropdownMenu1">
                     My finances</div></div>
-                </a></div>
+                </a>
+                <div class="dropdown-menu" id="myFinancesDropdownMenu">
+                    <div><a class ="dropdown-item" style="color:black;font-weight:bold;font-size:18px;background-color:#ccc;padding-left:50px;border-bottom:2px solid black;text-align:left;line-height:3;">
+                        My finances
+                    </a></div>
+                    <div class ="dropdown-item" style="display:block;padding-top:10px;border-bottom:2px solid black;">
+                        <div class="settingsLeftDivText">Add new account</div>
+                        <div class="settingsRightDivChange">
+                            <div class="settingsButtonForChange"><a href="http://localhost:8080/bank/addAccountForm" style="text-decoration:none;color:inherit;display:block;">Add</a></div>
+                        </div>
+                    </div>
+                </div>
+                </div>
                 <div><a class="dropdown-item" href="#" data-bs-toggle="dropdown" data-bs-target="#myDataDropdownMenu" data-bs-auto-close="outside">
                      <div class="wrapperForIconInDropdown-itemForDropdownMenu1">
                         <div class="divIconInDropdown-itemForDropdownMenu1">

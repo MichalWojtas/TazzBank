@@ -3,6 +3,8 @@ package com.gmail.wojtass.michal.controllers;
 import com.gmail.wojtass.michal.components.AccountManagement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -39,7 +41,8 @@ public class RegistrationController {
 	public String registrationPage() {
 		return "registration";
 	}
-	
+
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	@PostMapping(value="/registration")
 	public String postRegister(@ModelAttribute("user") @Validated User user, BindingResult bindingResult) {
 		if(repo.existsByUsername(user.getUsername())) {

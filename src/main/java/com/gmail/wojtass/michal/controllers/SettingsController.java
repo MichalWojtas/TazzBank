@@ -1,13 +1,18 @@
 package com.gmail.wojtass.michal.controllers;
 
+import com.gmail.wojtass.michal.components.AccountManagement;
+import com.gmail.wojtass.michal.model.AccountBank;
 import com.gmail.wojtass.michal.model.User;
 import com.gmail.wojtass.michal.otherMethods.WelcomeTextGenerator;
+import com.gmail.wojtass.michal.services.AccountBankRepository;
 import com.gmail.wojtass.michal.services.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -22,6 +27,12 @@ public class SettingsController {
 
     @Autowired
     UserRepository repo;
+
+    @Autowired
+    AccountManagement accountManagement;
+
+    @Autowired
+    AccountBankRepository accountBankRepository;
 
     private User getUser2(){
         Authentication auth2 = SecurityContextHolder.getContext().getAuthentication();
@@ -232,6 +243,42 @@ public class SettingsController {
         }else {
             user2.setPhoneNumber(user.getPhoneNumber());
             repo.save(user2);
+            return "redirect:/bank";
+        }
+    }
+
+    @RequestMapping("/bank/addAccountForm")
+    public String addAccountForm(Model model, @SessionAttribute("loggedUser") User user){
+        model.addAttribute("loggedUser",user);
+        return "addAccountForm";
+    }
+
+    @GetMapping("/bank/addAccountForm")
+    public String getAddAccountForm(Model model,@ModelAttribute("accountBank") AccountBank accountBank){
+        model.addAttribute("accountBank",accountBank);
+        return "addAccountForm";
+    }
+
+    @PostMapping("/bank/addAccountForm")
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public String postAddAccountForm(@ModelAttribute("accountBank") AccountBank accountBank, BindingResult bindingResult){
+        User user2 = getUser2();
+        boolean checkPassword = BCrypt.checkpw(accountBank.getConfirmPassword(),user2.getPassword());
+        if(!checkPassword){
+            bindingResult.rejectValue("confirmPassword", "error_code", "It's not your actual password");
+        }
+        if (accountBank.getAccountType() == AccountBank.AccountType.STANDARD){
+            accountManagement.addNewStandardAccount(user2,accountBank,bindingResult);
+        }
+        if (accountBank.getAccountType() == AccountBank.AccountType.SAVING){
+            accountManagement.addNewSavingAccount(user2,accountBank,bindingResult);
+        }
+
+        if(bindingResult.hasFieldErrors("confirmPassword") || bindingResult.hasFieldErrors("addAccountSuccessful")) {
+            return "addAccountForm";
+        }else {
+            repo.save(user2);
+            accountBankRepository.save(accountBank);
             return "redirect:/bank";
         }
     }

@@ -2,7 +2,7 @@ package com.gmail.wojtass.michal.controllers;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.List;
+import java.util.*;
 
 
 import com.gmail.wojtass.michal.components.AccountManagement;
@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -71,8 +72,23 @@ public class TransferController {
 			return "bank2";
 		}
 		int selectedAccountForId = Integer.parseInt(selectedAccount);
+		AccountBank selectedAccountFromTreeSet = null;
+		double giverUserAccountValue = 0;
+		for (AccountBank account : giverUser.getAccountsBank()) {
+			if (account.getAccountBankId() == selectedAccountForId) {
+				selectedAccountFromTreeSet = account;
+				break;
+			}
+		}
+		if (selectedAccount != null) {
+			giverUserAccountValue = selectedAccountFromTreeSet.getAccountValue();
+		}
+		if (giverUserAccountValue < transaction.getAmountTransaction()){
+			bindingResult.rejectValue("amountTransaction","error_code","You don't have enough funds in your account.");
+			return "bank2";
+		}
 		transferValue(transaction,giverUser,transaction.getRecipientUser(),selectedAccountForId);
-		transaction.setGiverAccountNumber(giverUser.getAccountsBank().get(selectedAccountForId).getAccountNumber());
+		transaction.setGiverAccountNumber(selectedAccountFromTreeSet.getAccountNumber());
 		accountManagement.updateAllAccountValuesToGiverUserAfterTransaction(giverUser,transaction.getAmountTransaction());
 		accountManagement.updateAllAccountValuesToRecipientUserAfterTransaction(transaction.getRecipientUser(),transaction.getAmountTransaction());
 		repo.save(transaction);
@@ -82,44 +98,64 @@ public class TransferController {
 	}
 	
 	@GetMapping(value="/bank2")
-	public String getBank2(Model model) {
+	public String getBank2(Model model,@SessionAttribute("loggedUser") User user) {
+		Set<AccountBank> list = user.getAccountsBank();
+		List<AccountBank> list1 = new ArrayList<>(list);
+		list1.sort(new Comparator<AccountBank>() {
+			@Override
+			public int compare(AccountBank o1, AccountBank o2) {
+				return Long.compare(o1.getAccountBankId(),o2.getAccountBankId());
+			}
+		});
 		model.addAttribute("transaction", new Transaction());
+		model.addAttribute("loggedUserSortedList",list1);
 		return "bank2";
 	}
 	
 	
 	
-	@Transactional(readOnly = false,rollbackFor = Exception.class)
+	@Transactional(readOnly = false,rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
 	public void transferValue(Transaction transaction,User giverUser,User recipientUser, int selectedAccountForId) {
 		double value = transaction.getAmountTransaction();
 		long recipientId = accountBankRepository.findUserIdByAccountNumber(transaction.getRecipientAccountNumber());
-		int recipientIndex = recipientUser.getAccountBankIndex(recipientId);
-		List<AccountBank> accountsBankGiverUser = giverUser.getAccountsBank();
-		List<AccountBank> accountsBankRecipientUser = recipientUser.getAccountsBank();
-		double giverValue = accountsBankGiverUser.get(selectedAccountForId).getAccountValue();
-		double recipientValue = accountsBankRecipientUser.get(recipientIndex).getAccountValue();
+
+		long selectedAccountForId1 = selectedAccountForId;
+		AccountBank giverUserSelectedAccountFromTreeSet = null;
+		for (AccountBank account : giverUser.getAccountsBank()) {
+			if (account.getAccountBankId() == selectedAccountForId1) {
+				giverUserSelectedAccountFromTreeSet = account;
+				break;
+			}
+		}
+
+
+		AccountBank recipientUserSelectedAccountFromTreeSet = null;
+		for (AccountBank account : recipientUser.getAccountsBank()) {
+			if (account.getAccountBankId() == recipientId) {
+				recipientUserSelectedAccountFromTreeSet = account;
+				break;
+			}
+		}
+		double giverValue = giverUserSelectedAccountFromTreeSet.getAccountValue();
+		double recipientValue = recipientUserSelectedAccountFromTreeSet.getAccountValue();
 		double tempLimitTransactionForDay = giverUser.getTempLimitTransactionForDay();
 		double tempLimitTransactionForMonth = giverUser.getTempLimitTransactionForMonth();
 		boolean isDayLimitDiffThanZero = giverUser.getLimitTransactionForDay() != 0;
 		boolean isMonthLimitDiffThanZero = giverUser.getLimitTransactionForMonth() != 0;
-		if(giverValue >= value) {
-			giverValue = giverValue - value;
-			recipientValue = recipientValue + value;
-			giverValue = BigDecimal.valueOf(giverValue).setScale(2, RoundingMode.HALF_UP).doubleValue();
-			recipientValue = BigDecimal.valueOf(recipientValue).setScale(2, RoundingMode.HALF_UP).doubleValue();
-			if (isDayLimitDiffThanZero){
-				tempLimitTransactionForDay = tempLimitTransactionForDay + transaction.getAmountTransaction();
-				System.out.println(tempLimitTransactionForDay);
-			}
-			if (isMonthLimitDiffThanZero){
-				tempLimitTransactionForMonth = tempLimitTransactionForMonth + transaction.getAmountTransaction();
-			}
-		}else {
-			throw new IllegalArgumentException("Must be possive value");
+		giverValue = giverValue - value;
+		recipientValue = recipientValue + value;
+		giverValue = BigDecimal.valueOf(giverValue).setScale(2, RoundingMode.HALF_UP).doubleValue();
+		recipientValue = BigDecimal.valueOf(recipientValue).setScale(2, RoundingMode.HALF_UP).doubleValue();
+		if (isDayLimitDiffThanZero){
+			tempLimitTransactionForDay = tempLimitTransactionForDay + transaction.getAmountTransaction();
+			System.out.println(tempLimitTransactionForDay);
+		}
+		if (isMonthLimitDiffThanZero){
+			tempLimitTransactionForMonth = tempLimitTransactionForMonth + transaction.getAmountTransaction();
 		}
 		try {
-			accountBankRepository.updateAccountValue(giverValue,giverUser.getAccountsBank().get(selectedAccountForId).getAccountBankId());
-			accountBankRepository.updateAccountValue(recipientValue,recipientUser.getAccountsBank().get(recipientIndex).getAccountBankId());
+			accountBankRepository.updateAccountValue(giverValue,giverUserSelectedAccountFromTreeSet.getAccountBankId());
+			accountBankRepository.updateAccountValue(recipientValue,recipientUserSelectedAccountFromTreeSet.getAccountBankId());
 			if (isDayLimitDiffThanZero){
 				giverUser.setTempLimitTransactionForDay(tempLimitTransactionForDay);
 			}

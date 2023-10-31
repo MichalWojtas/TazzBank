@@ -1,13 +1,19 @@
 package com.gmail.wojtass.michal.controllers;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.gmail.wojtass.michal.components.AccountManagement;
+import com.gmail.wojtass.michal.model.AccountBank;
 import com.gmail.wojtass.michal.otherMethods.WelcomeTextGenerator;
 import com.gmail.wojtass.michal.services.AccountBankRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,13 +60,21 @@ public class BankController {
 	
 	@Transactional(readOnly = false)
 	@PostMapping(value = "/bank",params = "addValue")
-	public String postBank(@ModelAttribute("user") @Validated User user, BindingResult bindingResult, @RequestParam("selectedAccount") String selectedAccount) {
+	public String postBank(@ModelAttribute("user") @Validated User user, BindingResult bindingResult, @RequestParam("selectedAccount") long selectedAccount) {
 		User loggedUser = getUser2();
 		double tmpValue = user.getTmpValue();
-		int selectedAccountForId = Integer.parseInt(selectedAccount);
-		double accountValue = loggedUser.getAccountsBank().get(selectedAccountForId).getAccountValue() + tmpValue;
+		long selectedAccountForId = selectedAccount;
+		AccountBank selectedAccountFromTreeSet = null;
+		for (AccountBank account : loggedUser.getAccountsBank()) {
+			if (account.getAccountBankId() == selectedAccountForId) {
+				selectedAccountFromTreeSet = account;
+				break;
+			}
+		}
+
+		double accountValue = selectedAccountFromTreeSet.getAccountValue() + tmpValue;
 		double ac = BigDecimal.valueOf(accountValue).setScale(2, RoundingMode.HALF_UP).doubleValue();
-		accountManagement.updateAccountValue(ac,loggedUser.getAccountsBank().get(selectedAccountForId).getAccountBankId());
+		accountManagement.updateAccountValue(ac,selectedAccountFromTreeSet.getAccountBankId());
 		accountManagement.updateAllAccountValuesToUser(loggedUser,tmpValue);
 		return "redirect:addValueSuccess";
 	}
@@ -70,9 +84,18 @@ public class BankController {
 		User loggedUser = getUser2();
 		HttpSession session = request.getSession();
 		WelcomeTextGenerator welcomeTextGenerator = new WelcomeTextGenerator();
+		Set<AccountBank> list = loggedUser.getAccountsBank();
+		List<AccountBank> list1 = new ArrayList<>(list);
+		list1.sort(new Comparator<AccountBank>() {
+			@Override
+			public int compare(AccountBank o1, AccountBank o2) {
+				return Long.compare(o1.getAccountBankId(),o2.getAccountBankId());
+			}
+		});
 		session.setAttribute("welcomeText",welcomeTextGenerator.generate());
 		model.addAttribute("loggedUser", loggedUser);
 		model.addAttribute("user", user);
+		model.addAttribute("loggedUserSortedList",list1);
 		return "bank";
 	}
 

@@ -60,8 +60,14 @@ public class User {
 	@Column(name = "actual_number_of_saving_accounts")
 	private int actualNumberOfSavingAccounts;
 
-	@OneToMany(mappedBy = "user")
-	private List<AccountBank> accountsBank = new ArrayList<>(MAX_STANDARD_ACCOUNTS+MAX_SAVING_ACCOUNTS);
+	//I need more than 1 collection as fetch Eager so i must do one as Set
+	@OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
+	private Set<AccountBank> accountsBank = new TreeSet<>(new Comparator<AccountBank>() {
+		@Override
+		public int compare(AccountBank o1, AccountBank o2) {
+			return Long.compare(o1.getAccountBankId(),o2.getAccountBankId());
+		}
+	});
 
 	@Pattern(regexp = "[0-9]{11}", message="Pesel should countains 11 digits.")
 	@Column(name = "pesel")
@@ -95,7 +101,6 @@ public class User {
 	private transient String b4encryptPassword;
 	
 	@Transient
-	@Column(name = "confirmPassword")
 	private transient String confirmPassword;
 
 	@Column(name = "all_accounts_value", columnDefinition = "double precision default 0")
@@ -309,18 +314,20 @@ public class User {
 		this.actualNumberOfSavingAccounts = actualNumberOfSavingAccounts;
 	}
 
-	public List<AccountBank> getAccountsBank() {
+	public Set<AccountBank> getAccountsBank() {
 		return accountsBank;
 	}
 
 
 	public int getAccountBankIndex(long id){
-		for (int i = 0; i < accountsBank.size(); i++) {
-			if (accountsBank.get(i).getAccountBankId() == id){
-				return i;
+		int index = 0;
+		for (AccountBank account : accountsBank) {
+			if (account.getAccountBankId() == id) {
+				return index;
 			}
+			index++;
 		}
-		return -1; //Should never happen
+		return -1; // Should never happen
 	}
 
 	public double getTmpValue() {
@@ -329,5 +336,13 @@ public class User {
 
 	public void setTmpValue(double tmpValue) {
 		this.tmpValue = tmpValue;
+	}
+
+	public static int getMaxStandardAccounts() {
+		return MAX_STANDARD_ACCOUNTS;
+	}
+
+	public static int getMaxSavingAccounts() {
+		return MAX_SAVING_ACCOUNTS;
 	}
 }

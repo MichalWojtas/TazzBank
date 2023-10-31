@@ -31,6 +31,15 @@ public class AccountBank {
     @Column(name = "account_type")
     private AccountType accountType;
 
+    @Column(name = "account_name")
+    private String accountName;
+
+    @org.springframework.data.annotation.Transient
+    private transient String confirmPassword;
+
+    @org.springframework.data.annotation.Transient
+    private transient boolean addAccountSuccessful = false;
+
     public enum AccountType{
         STANDARD,SAVING;
     }
@@ -82,5 +91,29 @@ public class AccountBank {
 
     public void setAccountType(AccountType accountType) {
         this.accountType = accountType;
+    }
+
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
+
+    public boolean isAddAccountSuccessful() {
+        return addAccountSuccessful;
+    }
+
+    public void setAddAccountSuccessful(boolean addAccountSuccessful) {
+        this.addAccountSuccessful = addAccountSuccessful;
     }
 }

@@ -7,6 +7,7 @@ import com.gmail.wojtass.michal.services.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
@@ -26,7 +27,7 @@ public class ServerManagement {
     /**
      * Created only for first application use to create first and for now only object of server info which contain LocalDateTime when last time limit was set to 0.
      */
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void createServerInfoObjectToDB(){
         if (serverInfoRepo.findByServerInfoId(1) == null) {
             ServerInfo serverInfo = new ServerInfo(LocalDateTime.now(), LocalDateTime.now());
@@ -37,6 +38,7 @@ public class ServerManagement {
 
 
     /**
+     * NOT WORK LIMIT DOESN'T RESET ON 00:00 WHEN APP WAS NOT WORKING AND SHOULD AFTER LAUNCH START THIS METHOD NEXT DAY EVEN ON 00:02, MAYBE THIS WILL LAUNCH AFTER FULL DAY FROM LAST DATE
      * Method is for secure, if automatic reset not turn on, then if pass 1 day for daily limit between your login to system and last reset it will reset all users limit to 0
      * To improve its should be in another place than in bankController, but should start when application starts
      * Not tested, i don't check it works, but it should

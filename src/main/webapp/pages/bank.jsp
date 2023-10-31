@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="css/darkMode.css">
 <link rel="stylesheet" href="css/circleButtons.css">
 <link rel="stylesheet" href="css/bottomFixedDiv.css">
+<link rel="stylesheet" href="../css/separateForm.css">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 <style>
     html, body {
@@ -51,9 +52,9 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="red" class="bi bi-person-fill" viewBox="0 0 16 16">
                           <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
                         </svg>
-                    </div>${loggedUser.getLastName()} ${loggedUser.getUsername()}</div>
+                    </div>${loggedUser.getLastName()} ${loggedUser.getFirstName()}</div>
                 </div>
-                <div><a class="dropdown-item" href="#">
+                <div><a class="dropdown-item" href="#" data-bs-toggle="dropdown" data-bs-target="#myFinancesDropdownMenu" data-bs-auto-close="outside">
                     <div class="wrapperForIconInDropdown-itemForDropdownMenu1">
                     <div class="divIconInDropdown-itemForDropdownMenu1">
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="black" class="bi bi-card-list" viewBox="0 0 16 16"><path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/><path d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-1-5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zM4 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm0 2.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z"/>
@@ -62,7 +63,19 @@
                     <div class="wrapperForTextInDropdown-itemForDropdownMenu1">
                     <div class="divForTextInDropdown-itemForDropdownMenu1">
                     My finances</div></div>
-                </a></div>
+                </a>
+                <div class="dropdown-menu" id="myFinancesDropdownMenu">
+                    <div><a class ="dropdown-item" style="color:black;font-weight:bold;font-size:18px;background-color:#ccc;padding-left:50px;border-bottom:2px solid black;text-align:left;line-height:3;">
+                        My finances
+                    </a></div>
+                    <div class ="dropdown-item" style="display:block;padding-top:10px;border-bottom:2px solid black;">
+                        <div class="settingsLeftDivText">Add new account</div>
+                        <div class="settingsRightDivChange">
+                            <div class="settingsButtonForChange"><a href="http://localhost:8080/bank/addAccountForm" style="text-decoration:none;color:inherit;display:block;">Add</a></div>
+                        </div>
+                    </div>
+                </div>
+                </div>
                 <div><a class="dropdown-item" href="#" data-bs-toggle="dropdown" data-bs-target="#myDataDropdownMenu" data-bs-auto-close="outside">
                     <div class="wrapperForIconInDropdown-itemForDropdownMenu1">
                         <div class="divIconInDropdown-itemForDropdownMenu1">
@@ -215,7 +228,7 @@
 </div>
 <div class = "container-fluid" style="margin-bottom:4rem;">
     <div class ="row">
-        <div class = "col-lg-12" id="welcomeText">${welcomeText}, ${loggedUser.getUsername()}</div>
+        <div class = "col-lg-12" id="welcomeText">${welcomeText}, ${loggedUser.getFirstName()}</div>
     </div>
 </div>
 <div class = "container-fluid">
@@ -239,29 +252,41 @@
         <button class="circleButtonsLeft" type="button" data-bs-toggle="dropdown" data-bs-target="#addFundsDropdown" >
         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="red" class="bi bi-cash" viewBox="0 0 16 16"><path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/><path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2H3z"/>
         </svg></button>
-        <div class="dropdown-menu" id="addFundsDropdown" style="padding-left:80px;padding-right:80px;">
+        <div class="dropdown-menu" id="addFundsDropdown">
         <div class="dropdown-item" style="height:auto;">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
                         <form:form method="post" modelAttribute="user">
-                        <div class="col-lg-12" style="font-size:36px;font-weight:bold;color:black;margin-top:50px;text-align:center;">Add funds</div>
-                        <div class="form-group" style="margin-top:50px;margin-left:10px;">
-                            <label>Choose account</label>
-                            <select name="selectedAccount" class="form-control" style="border: 1px solid black; margin-bottom: 5px; margin-top: 5px;">
-                                <option value="0">Account 1</option>
-                                <option value="1">Account 2</option>
-                                <option value="2">Account 3</option>
-                                <option value="3">Account 4</option>
-                            </select>
+                        <div class="col-lg-12 headerFormTemplate">Add funds</div>
+                        <div class="form-group col-lg-12 formGroupTopTemplate">
+                        <label class="labelFormTemplate">Choose account</label>
+                        <fieldset>
+                            <div class="container" style="width:100%;">
+                                <div class="row">
+                                    <c:forEach items="${loggedUserSortedList}" var="accountItem" varStatus="loop">
+                                        <div class="col-lg-6 wrapperRadioForLabelFormTemplate">
+                                            <div class="innerWrapperRadioForLabelFormTemplate">
+                                                <input type="radio" class="btn-check chooseAccountWrapper" name="selectedAccount" id="accountTypeOption${loop.index}" autocomplete="off" value="${accountItem.getAccountBankId()}" <c:if test="${loop.index == 0}">checked</c:if>/>
+                                                <label class="chooseAccountWrapper" for="accountTypeOption${loop.index}">
+                                                    <label class="textLabelInsideChooseAccountWrapper" for="accountTypeOption${loop.index}">${accountItem.getAccountName()}</label>
+                                                    <label class="textLabelInsideChooseAccountWrapper" for="accountTypeOption${loop.index}">Value: ${accountItem.getAccountValue()} PLN</label>
+                                                    <label class="textLabelInsideChooseAccountWrapper" for="accountTypeOption${loop.index}">Account number:<br>${accountItem.getAccountNumber()}</label>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </c:forEach>
+                                </div>
+                            </div>
+                        </fieldset>
                         </div>
-                        <div class="form-group" style="margin-top:50px;margin-left:10px;">
-                            <label>Amount:</label>
-                            <form:input path="tmpValue" placeholder="0.00 PLN" type="number" step="0.01" min="0" class="form-control" style="border:1px solid black;margin-bottom:5px;margin-top:5px;"/>
-                            <form:errors path="tmpValue" style="color:red;" class="form-text text-muted"/>
+                        <div class="form-group formGroupTopTemplate">
+                            <label class="labelFormTemplate">Amount:</label>
+                            <form:input path="tmpValue" placeholder="0.00 PLN" type="number" step="0.01" min="0" class="form-control inputControlFormTemplate"/>
+                            <form:errors path="tmpValue" class="form-text errorTextFormTemplate"/>
                         </div>
-                        <div class="form-group" style="margin-top:40px;margin-left:10px;margin-bottom:70px;padding-left:15px;padding-right:15px;">
-                            <form:button type="submit" name="addValue" class="btn btn-success" style="width:46%;border:1px solid black;">Confirm</form:button>
+                        <div class="form-group formGroupBotTemplate">
+                            <form:button type="submit" name="addValue" class="btn btn-success buttonSubmitFormWithoutCancelTemplate">Confirm</form:button>
                         </div>
                         </form:form>
                 </div>

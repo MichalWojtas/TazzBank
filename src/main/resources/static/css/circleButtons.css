@@ -63,8 +63,40 @@
     border:var(--dropdownMenuBorderColor);
     border-radius:16px;
     filter:var(--dropdownMenuFilterShadow);
-
+    padding-left:40px;
+    padding-right:40px;
 }
+
+@media(max-width:1200px){
+    .dropdown-menu#addFundsDropdown{
+        margin-right:15% !important;
+        margin-left:15% !important;
+        padding-left:24px;
+        padding-right:24px;
+        width:70%;
+    }
+}
+
+@media(max-width:768px){
+    .dropdown-menu#addFundsDropdown{
+        margin-right:10% !important;
+        margin-left:10% !important;
+        padding-left:16px;
+        padding-right:16px;
+        width:80%;
+    }
+}
+
+@media(max-width:480px){
+    .dropdown-menu#addFundsDropdown{
+        margin-right:5% !important;
+        margin-left:5% !important;
+        padding-left:8px;
+        padding-right:8px;
+        width:90%;
+    }
+}
+
 #addFundsDropdown a{
     transition: all 0.4s ease-in-out;
 }

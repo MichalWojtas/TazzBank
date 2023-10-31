@@ -19,7 +19,7 @@
 <jsp:include page="headerTemplate.jsp" />
 <div class = "container-fluid" style="margin-bottom:20px;">
     <div class ="row">
-        <div class = "col-lg-12" id="welcomeText">${welcomeText}, ${loggedUser.getUsername()}</div>
+        <div class = "col-lg-12" id="welcomeText">${welcomeText}, ${loggedUser.getFirstName()}</div>
     </div>
 </div>
 

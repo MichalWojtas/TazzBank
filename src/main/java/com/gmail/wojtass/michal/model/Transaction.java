@@ -45,10 +45,10 @@ public class Transaction {
 	@Pattern(regexp = "[0-9]{26}", message = "Wrong format. Account number should contains 26 numbers and only digits.")
 	private String giverAccountNumber;
 
-	@Transient
+	@org.springframework.data.annotation.Transient
 	private transient User recipientUser;
 
-	@Transient
+	@org.springframework.data.annotation.Transient
 	private transient User giverUser;
 
 	@ManyToMany(mappedBy = "transactions", fetch=FetchType.EAGER)
