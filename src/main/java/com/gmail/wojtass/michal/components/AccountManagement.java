@@ -109,39 +109,69 @@ public class AccountManagement {
      * @param value double
      */
     @Transactional
-    public void updateAllAccountValuesToUser(User user, double value){
+    public void updateAllAccountValuesToUser(User user, double value, AccountBank.AccountType typeOfAccount){
+        double tmpStandardValue = value;
+        double tmpSavingValue = value;
         for (AccountBank accountBank :user.getAccountsBank()) {
             value += accountBank.getAccountValue();
+            if (typeOfAccount == AccountBank.AccountType.STANDARD && accountBank.getAccountType() == typeOfAccount){
+                tmpStandardValue += accountBank.getAccountValue();
+            }
+            if(accountBank.getAccountType() == AccountBank.AccountType.SAVING && accountBank.getAccountType() == typeOfAccount){
+                tmpSavingValue += accountBank.getAccountValue();
+            }
         }
         user.setAllAccountsValue(value);
+        if (typeOfAccount == AccountBank.AccountType.STANDARD) {
+            user.setAllStandardAccountsValue(tmpStandardValue);
+        }else if (typeOfAccount == AccountBank.AccountType.SAVING) {
+            user.setAllSavingAccountsValue(tmpSavingValue);
+        }
+
         repo.saveAndFlush(user);
     }
 
     @Transactional
-    public void updateAllAccountValuesToGiverUserAfterTransaction(User user, double value){
+    public void updateAllAccountValuesToGiverUserAfterTransaction(User user, double value, AccountBank.AccountType typeOfAccount){
         value = (-2*value)+value;
+        double tmpStandardValue = (-2*value)+value;
+        double tmpSavingValue = (-2*value)+value;
+        //I can also make version where first we have if and check its that typeOfAccount Standard or Saving, and each if contains for, i guess can be faster, but will have more code, same for others method this type
         for (AccountBank accountBank :user.getAccountsBank()) {
             value += accountBank.getAccountValue();
+            if (typeOfAccount == AccountBank.AccountType.STANDARD && accountBank.getAccountType() == typeOfAccount){
+                tmpStandardValue += accountBank.getAccountValue();
+            }
+            if(accountBank.getAccountType() == AccountBank.AccountType.SAVING && accountBank.getAccountType() == typeOfAccount){
+                tmpSavingValue += accountBank.getAccountValue();
+            }
         }
         user.setAllAccountsValue(value);
+        if (typeOfAccount == AccountBank.AccountType.STANDARD) {
+            user.setAllStandardAccountsValue(tmpStandardValue);
+        }else if (typeOfAccount == AccountBank.AccountType.SAVING) {
+            user.setAllSavingAccountsValue(tmpSavingValue);
+        }
     }
 
     @Transactional
-    public void updateAllAccountValuesToRecipientUserAfterTransaction(User user, double value){
+    public void updateAllAccountValuesToRecipientUserAfterTransaction(User user, double value, AccountBank.AccountType typeOfAccount){
+        double tmpStandardValue = value;
+        double tmpSavingValue = value;
         for (AccountBank accountBank :user.getAccountsBank()) {
             value += accountBank.getAccountValue();
+            if (typeOfAccount == AccountBank.AccountType.STANDARD && accountBank.getAccountType() == typeOfAccount){
+                tmpStandardValue += accountBank.getAccountValue();
+            }
+            if(accountBank.getAccountType() == AccountBank.AccountType.SAVING && accountBank.getAccountType() == typeOfAccount){
+                tmpSavingValue += accountBank.getAccountValue();
+            }
         }
         user.setAllAccountsValue(value);
-    }
-
-    public void sss(TreeSet<AccountBank> list, User loggedUser){
-        Set<AccountBank> accountsBank = loggedUser.getAccountsBank();
-        List<AccountBank> list1 = new ArrayList<>(list);
-        list1.sort(new Comparator<AccountBank>() {
-            @Override
-            public int compare(AccountBank o1, AccountBank o2) {
-                return Long.compare(o1.getAccountBankId(),o2.getAccountBankId());
-            }
-        });
+        if (typeOfAccount == AccountBank.AccountType.STANDARD) {
+            user.setAllStandardAccountsValue(tmpStandardValue);
+        }else if (typeOfAccount == AccountBank.AccountType.SAVING) {
+            user.setAllSavingAccountsValue(tmpSavingValue);
+        }
     }
 }

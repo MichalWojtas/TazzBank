@@ -71,11 +71,12 @@ public class BankController {
 				break;
 			}
 		}
+		AccountBank.AccountType typeOfAccount = selectedAccountFromTreeSet.getAccountType();
 
 		double accountValue = selectedAccountFromTreeSet.getAccountValue() + tmpValue;
 		double ac = BigDecimal.valueOf(accountValue).setScale(2, RoundingMode.HALF_UP).doubleValue();
 		accountManagement.updateAccountValue(ac,selectedAccountFromTreeSet.getAccountBankId());
-		accountManagement.updateAllAccountValuesToUser(loggedUser,tmpValue);
+		accountManagement.updateAllAccountValuesToUser(loggedUser,tmpValue,typeOfAccount);
 		return "redirect:addValueSuccess";
 	}
 	

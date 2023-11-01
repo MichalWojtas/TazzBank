@@ -80,6 +80,16 @@ public class TransferController {
 				break;
 			}
 		}
+		long recipientId = accountBankRepository.findUserIdByAccountNumber(transaction.getRecipientAccountNumber());
+		AccountBank recipientUserSelectedAccountFromTreeSet = null;
+		for (AccountBank account : transaction.getRecipientUser().getAccountsBank()) {
+			if (account.getAccountBankId() == recipientId) {
+				recipientUserSelectedAccountFromTreeSet = account;
+				break;
+			}
+		}
+		AccountBank.AccountType typeOfAccountGiverUser = selectedAccountFromTreeSet.getAccountType();
+		AccountBank.AccountType typeOfAccountRecipientUser = recipientUserSelectedAccountFromTreeSet.getAccountType();
 		if (selectedAccount != null) {
 			giverUserAccountValue = selectedAccountFromTreeSet.getAccountValue();
 		}
@@ -89,8 +99,8 @@ public class TransferController {
 		}
 		transferValue(transaction,giverUser,transaction.getRecipientUser(),selectedAccountForId);
 		transaction.setGiverAccountNumber(selectedAccountFromTreeSet.getAccountNumber());
-		accountManagement.updateAllAccountValuesToGiverUserAfterTransaction(giverUser,transaction.getAmountTransaction());
-		accountManagement.updateAllAccountValuesToRecipientUserAfterTransaction(transaction.getRecipientUser(),transaction.getAmountTransaction());
+		accountManagement.updateAllAccountValuesToGiverUserAfterTransaction(giverUser,transaction.getAmountTransaction(),typeOfAccountGiverUser);
+		accountManagement.updateAllAccountValuesToRecipientUserAfterTransaction(transaction.getRecipientUser(),transaction.getAmountTransaction(),typeOfAccountRecipientUser);
 		repo.save(transaction);
 		
 		return "redirect:bank";

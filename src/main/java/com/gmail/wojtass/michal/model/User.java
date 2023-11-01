@@ -106,6 +106,12 @@ public class User {
 	@Column(name = "all_accounts_value", columnDefinition = "double precision default 0")
 	private double allAccountsValue = 0;
 
+	@Column(name = "all_standard_accounts_value" , columnDefinition = "double precision default 0")
+	private double allStandardAccountsValue = 0;
+
+	@Column(name = "all_saving_accounts_value" , columnDefinition = "double precision default 0")
+	private double allSavingAccountsValue = 0;
+
 	@Transient
 	@Min(value = 0,message = "Accounts value can't be negative")
 	private transient double tmpValue = 0;
@@ -344,5 +350,21 @@ public class User {
 
 	public static int getMaxSavingAccounts() {
 		return MAX_SAVING_ACCOUNTS;
+	}
+
+	public double getAllStandardAccountsValue() {
+		return allStandardAccountsValue;
+	}
+
+	public void setAllStandardAccountsValue(double allStandardAccountsValue) {
+		this.allStandardAccountsValue = allStandardAccountsValue;
+	}
+
+	public double getAllSavingAccountsValue() {
+		return allSavingAccountsValue;
+	}
+
+	public void setAllSavingAccountsValue(double allSavingAccountsValue) {
+		this.allSavingAccountsValue = allSavingAccountsValue;
 	}
 }
