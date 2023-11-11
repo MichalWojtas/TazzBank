@@ -60,7 +60,7 @@
 				    <label class="labelFormTemplate">Account number:</label>
 				    <form:input path="recipientAccountNumber" placeholder="Account number..." type="text" class="form-control inputControlFormTemplate"/>
 				    <form:errors path="recipientAccountNumber" style="color:red" class="form-text"/>
-				    <form:errors path="recipientUser" class="form-text errorTextFormTemplate"/>
+				    <form:errors path="recipientAccountBank" class="form-text errorTextFormTemplate"/>
 			    </div>
 		        <div class="form-group formGroupMidTemplate">
 			        <label class="labelFormTemplate">Name and address of consignee:</label>

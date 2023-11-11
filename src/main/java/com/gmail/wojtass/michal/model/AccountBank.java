@@ -3,6 +3,9 @@ package com.gmail.wojtass.michal.model;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.util.Comparator;
+import java.util.Set;
+import java.util.TreeSet;
 
 @Entity
 @Table(name = "account_bank")
@@ -22,7 +25,6 @@ public class AccountBank {
     @Min(value = 0,message = "Account value can't be negative")
     private double accountValue = 0;
 
-    @NotNull
     @ManyToOne()
     private User user;
 
@@ -41,8 +43,24 @@ public class AccountBank {
     private transient boolean addAccountSuccessful = false;
 
     public enum AccountType{
-        STANDARD,SAVING;
+        STANDARD,SAVING
     }
+
+    @OneToMany(mappedBy = "accountBank",fetch = FetchType.LAZY)
+    private Set<DepositPayout> deposits = new TreeSet<>(new Comparator<DepositPayout>() {
+        @Override
+        public int compare(DepositPayout o1, DepositPayout o2) {
+            return Long.compare(o1.getDepositId(),o2.getDepositId());
+        }
+    });
+
+    @ManyToMany
+    private Set<Transaction> transactions = new TreeSet<>(new Comparator<Transaction>() {
+        @Override
+        public int compare(Transaction o1, Transaction o2) {
+            return Long.compare(o1.getTransactionId(),o2.getTransactionId());
+        }
+    });
 
     public AccountBank() {
     }
@@ -115,5 +133,13 @@ public class AccountBank {
 
     public void setAddAccountSuccessful(boolean addAccountSuccessful) {
         this.addAccountSuccessful = addAccountSuccessful;
+    }
+
+    public Set<Transaction> getTransactions() {
+        return transactions;
+    }
+
+    public void setTransactions(Set<Transaction> transactions) {
+        this.transactions = transactions;
     }
 }

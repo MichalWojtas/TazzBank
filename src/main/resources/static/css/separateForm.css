@@ -202,3 +202,25 @@
     border:3px solid red;
     border-radius:12px;
 }
+
+#sortFormDropdown{
+    border:3px solid black;
+    border-radius:10px;
+    margin-bottom:7px;
+    padding:10px;
+    text-align:left;
+    background-color: #ececec;
+}
+
+    @keyframes sortAnimation{
+        0%{
+            opacity:0;
+            transform: translateY(200px);
+
+        }
+        100%{
+            opacity:1;
+            transform:translateY(189px);
+
+        }
+    }

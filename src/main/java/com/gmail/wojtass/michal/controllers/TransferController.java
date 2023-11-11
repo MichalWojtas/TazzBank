@@ -49,15 +49,14 @@ public class TransferController {
 	@Transactional(readOnly = false,rollbackFor = Exception.class)
 	@PostMapping("/bank2")
 	public String postBank2(@ModelAttribute("transaction") @Validated Transaction transaction,BindingResult bindingResult, @RequestParam("selectedAccount") String selectedAccount) {
-		
 		if(bindingResult.hasErrors()) {
 			return "bank2";
 		}
-		long recipientUserId = accountBankRepository.findUserIdByAccountNumber(transaction.getRecipientAccountNumber());
-		User userX = userRepo.findByUserId(recipientUserId);
-		transaction.setRecipientUser(userX);
-		if(transaction.getRecipientUser()==null) {
-			bindingResult.rejectValue("recipientUser", "error_code", "That account is not exists.");
+		long recipientAccountBankId = accountBankRepository.findAccountBankIdByAccountNumber(transaction.getRecipientAccountNumber());
+		AccountBank accountBankX = accountBankRepository.findByAccountBankId(recipientAccountBankId);
+		transaction.setRecipientAccountBank(accountBankX);
+		if(transaction.getRecipientAccountBank()==null) {
+			bindingResult.rejectValue("recipientAccountBank", "error_code", "That account is not exists.");
 			return "bank2";
 		}else {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -80,10 +79,13 @@ public class TransferController {
 				break;
 			}
 		}
-		long recipientId = accountBankRepository.findUserIdByAccountNumber(transaction.getRecipientAccountNumber());
 		AccountBank recipientUserSelectedAccountFromTreeSet = null;
+		long recipientUserId = accountBankRepository.findUserIdByAccountNumber(transaction.getRecipientAccountNumber());
+		User recipientUserX = userRepo.findByUserId(recipientUserId);
+		transaction.setRecipientUser(recipientUserX);
+			System.out.println("User recipient transaction list add before: " + transaction.getRecipientUser().getTransactions().size());
 		for (AccountBank account : transaction.getRecipientUser().getAccountsBank()) {
-			if (account.getAccountBankId() == recipientId) {
+			if (account.getAccountBankId() == recipientAccountBankId) {
 				recipientUserSelectedAccountFromTreeSet = account;
 				break;
 			}
@@ -97,11 +99,12 @@ public class TransferController {
 			bindingResult.rejectValue("amountTransaction","error_code","You don't have enough funds in your account.");
 			return "bank2";
 		}
+			System.out.println("User recipient transaction list add before: " + transaction.getRecipientUser().getTransactions().size());
 		transferValue(transaction,giverUser,transaction.getRecipientUser(),selectedAccountForId);
 		transaction.setGiverAccountNumber(selectedAccountFromTreeSet.getAccountNumber());
+		repo.save(transaction);
 		accountManagement.updateAllAccountValuesToGiverUserAfterTransaction(giverUser,transaction.getAmountTransaction(),typeOfAccountGiverUser);
 		accountManagement.updateAllAccountValuesToRecipientUserAfterTransaction(transaction.getRecipientUser(),transaction.getAmountTransaction(),typeOfAccountRecipientUser);
-		repo.save(transaction);
 		
 		return "redirect:bank";
 		}
@@ -127,7 +130,7 @@ public class TransferController {
 	@Transactional(readOnly = false,rollbackFor = Exception.class,propagation = Propagation.REQUIRES_NEW)
 	public void transferValue(Transaction transaction,User giverUser,User recipientUser, int selectedAccountForId) {
 		double value = transaction.getAmountTransaction();
-		long recipientId = accountBankRepository.findUserIdByAccountNumber(transaction.getRecipientAccountNumber());
+		long recipientId = accountBankRepository.findAccountBankIdByAccountNumber(transaction.getRecipientAccountNumber());
 
 		long selectedAccountForId1 = selectedAccountForId;
 		AccountBank giverUserSelectedAccountFromTreeSet = null;
@@ -137,7 +140,6 @@ public class TransferController {
 				break;
 			}
 		}
-
 
 		AccountBank recipientUserSelectedAccountFromTreeSet = null;
 		for (AccountBank account : recipientUser.getAccountsBank()) {
@@ -158,24 +160,49 @@ public class TransferController {
 		recipientValue = BigDecimal.valueOf(recipientValue).setScale(2, RoundingMode.HALF_UP).doubleValue();
 		if (isDayLimitDiffThanZero){
 			tempLimitTransactionForDay = tempLimitTransactionForDay + transaction.getAmountTransaction();
-			System.out.println(tempLimitTransactionForDay);
 		}
 		if (isMonthLimitDiffThanZero){
 			tempLimitTransactionForMonth = tempLimitTransactionForMonth + transaction.getAmountTransaction();
 		}
 		try {
+			System.out.println("User recipient transaction list add before: " + recipientUser.getTransactions().size());
 			accountBankRepository.updateAccountValue(giverValue,giverUserSelectedAccountFromTreeSet.getAccountBankId());
 			accountBankRepository.updateAccountValue(recipientValue,recipientUserSelectedAccountFromTreeSet.getAccountBankId());
+			//Add transactions to accountbank lists and add accountbank to transactions list
+			System.out.println("Accountbanks add giver size before: " + transaction.getAccountBanks().size());
+			transaction.getAccountBanks().add(giverUserSelectedAccountFromTreeSet);
+			System.out.println("Accountbanks add giver size after: " + transaction.getAccountBanks().size());
+			System.out.println("AccountBank list transaction giver size transakcji before: " + giverUserSelectedAccountFromTreeSet.getTransactions().size());
+			giverUserSelectedAccountFromTreeSet.getTransactions().add(transaction);
+			System.out.println("AccountBank list transaction giver size transakcji after: " + giverUserSelectedAccountFromTreeSet.getTransactions().size());
+			System.out.println("Accountbanks add recipient size before: " + transaction.getAccountBanks().size());
+			transaction.getAccountBanks().add(recipientUserSelectedAccountFromTreeSet);
+			System.out.println("Accountbanks add recipient size after: " + transaction.getAccountBanks().size());
+			System.out.println("AccountBank list transaction recipient size transakcji before: " + recipientUserSelectedAccountFromTreeSet.getTransactions().size());
+			recipientUserSelectedAccountFromTreeSet.getTransactions().add(transaction);
+			System.out.println("AccountBank list transaction recipient size transakcji after: " + recipientUserSelectedAccountFromTreeSet.getTransactions().size());
+			transaction.setAmountGiverAfterTransaction(giverValue);
+			transaction.setAmountRecipientAfterTransaction(recipientValue);
 			if (isDayLimitDiffThanZero){
 				giverUser.setTempLimitTransactionForDay(tempLimitTransactionForDay);
 			}
 			if (isMonthLimitDiffThanZero){
 				recipientUser.setTempLimitTransactionForMonth(tempLimitTransactionForMonth);
 			}
+			//recipientUser.getTransactions().clear();
+			//giverUser.getTransactions().clear();
+			System.out.println("Transaction user recipient list add before: "+ transaction.getUsers().size());
 			transaction.getUsers().add(recipientUser);
+			System.out.println("Transaction user recipient list add after: "+ transaction.getUsers().size());
+			System.out.println("User recipient transaction list add before: " + recipientUser.getTransactions().size());
 			recipientUser.getTransactions().add(transaction);
+			System.out.println("User recipient transaction list add after: " + recipientUser.getTransactions().size());
+			System.out.println("Transaction user giver list add before: "+ transaction.getUsers().size());
 			transaction.getUsers().add(giverUser);
+			System.out.println("Transaction user giver list add after: "+ transaction.getUsers().size());
+			System.out.println("User giver transaction list add before: " + giverUser.getTransactions().size());
 			giverUser.getTransactions().add(transaction);
+			System.out.println("User giver transaction list add after: " + giverUser.getTransactions().size());
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

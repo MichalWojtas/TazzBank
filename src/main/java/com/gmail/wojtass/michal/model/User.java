@@ -69,6 +69,15 @@ public class User {
 		}
 	});
 
+	//If something wrong, go EAGER, but i want to try lazy solution
+	@OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
+	private Set<DepositPayout> deposits = new TreeSet<>(new Comparator<DepositPayout>() {
+		@Override
+		public int compare(DepositPayout o1, DepositPayout o2) {
+			return Long.compare(o1.getDepositId(),o2.getDepositId());
+		}
+	});
+
 	@Pattern(regexp = "[0-9]{11}", message="Pesel should countains 11 digits.")
 	@Column(name = "pesel")
 	private String pesel;
@@ -132,7 +141,8 @@ public class User {
 	@Column(name = "temp_limit_transaction_for_month", columnDefinition = "double precision default 0")
 	private double tempLimitTransactionForMonth = 0;
 
-	@ManyToMany(fetch=FetchType.EAGER)
+	//Should be that and saving on transaction object
+	@ManyToMany(fetch=FetchType.EAGER, mappedBy = "users")
 	private List<Transaction> transactions = new ArrayList<Transaction>();
 	
 	public User() {
@@ -143,6 +153,10 @@ public class User {
 	
 	public void bcryptPassword() {
 		this.password = BCrypt.hashpw(b4encryptPassword, BCrypt.gensalt(10));
+	}
+
+	public String bcryptPasswordForExamples(String b4encryptPassword){
+		return BCrypt.hashpw(b4encryptPassword,BCrypt.gensalt(10));
 	}
 	public String bcryptPassword(String password){
 		return BCrypt.hashpw(password,BCrypt.gensalt(10));

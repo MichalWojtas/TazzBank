@@ -1,7 +1,6 @@
 package com.gmail.wojtass.michal.controllers;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -14,12 +13,15 @@ import javax.servlet.http.HttpSession;
 
 import com.gmail.wojtass.michal.components.AccountManagement;
 import com.gmail.wojtass.michal.model.AccountBank;
+import com.gmail.wojtass.michal.model.DepositPayout;
 import com.gmail.wojtass.michal.otherMethods.WelcomeTextGenerator;
 import com.gmail.wojtass.michal.services.AccountBankRepository;
+import com.gmail.wojtass.michal.services.DepositPayoutRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -42,6 +44,9 @@ public class BankController {
 	@Autowired
 	AccountManagement accountManagement;
 
+	@Autowired
+	DepositPayoutRepository depositPayoutRepository;
+
 
 	/* //If token will be required, made when problems with AJAX
 	@Autowired
@@ -58,7 +63,7 @@ public class BankController {
 		return user2;
 	}
 	
-	@Transactional(readOnly = false)
+	@Transactional(readOnly = false,propagation = Propagation.REQUIRES_NEW)
 	@PostMapping(value = "/bank",params = "addValue")
 	public String postBank(@ModelAttribute("user") @Validated User user, BindingResult bindingResult, @RequestParam("selectedAccount") long selectedAccount) {
 		User loggedUser = getUser2();
@@ -77,6 +82,9 @@ public class BankController {
 		double ac = BigDecimal.valueOf(accountValue).setScale(2, RoundingMode.HALF_UP).doubleValue();
 		accountManagement.updateAccountValue(ac,selectedAccountFromTreeSet.getAccountBankId());
 		accountManagement.updateAllAccountValuesToUser(loggedUser,tmpValue,typeOfAccount);
+
+		accountManagement.createNewDepositPayout(tmpValue,ac,"DEFAULT",loggedUser,selectedAccountFromTreeSet, DepositPayout.DepositType.DEPOSIT);
+
 		return "redirect:addValueSuccess";
 	}
 	
