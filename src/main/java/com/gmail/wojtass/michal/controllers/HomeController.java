@@ -41,7 +41,7 @@ public class HomeController {
 		createServerInfoObjectToDBMethod();
 		checkLastResetAndResetIfMissedMethod();
 		//Comment if you don't want to have example database and comment after create OR Uncomment if you want create it
-		exampleDataForDatabase.createExampleDB();
+		//exampleDataForDatabase.createExampleDB();
 
 		return "home";
 	}
